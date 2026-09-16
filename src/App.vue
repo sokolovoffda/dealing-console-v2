@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+// пока без props/store
 </script>
 
 <template>
-  <HelloWorld />
+  <main>
+    <h1>Dealing Console v2</h1>
+    <p>Учебный scaffold. FSD и интеграции — в следующих LEARN.</p>
+  </main>
 </template>
