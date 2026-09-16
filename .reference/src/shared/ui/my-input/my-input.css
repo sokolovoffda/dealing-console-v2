@@ -1,0 +1,186 @@
+.my-input {
+  height: 72px;
+  border-radius: 16px !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.my-input .wui-input__inner,
+.my-input .wui-input__field {
+  height: 72px !important;
+  min-height: 72px !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.my-input .wui-input__inner {
+  background-color: var(--color-fld-num-bg-def) !important;
+  border-color: var(--color-fld-num-brd-def) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+.my-input .wui-input__field {
+  background-color: var(--color-fld-num-bg-def) !important;
+  border-color: var(--color-fld-num-brd-def) !important;
+  border-radius: 16px !important;
+  color: var(--color-fld-num-lbl-def) !important;
+  font-size: 32px !important;
+  line-height: 72px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.my-input .wui-input__field::placeholder {
+  color: var(--color-fld-num-plc-def) !important;
+  font-size: 32px !important;
+  line-height: 72px !important;
+  opacity: 1;
+}
+
+.my-input .wui-input__title {
+  color: var(--color-fld-num-title-def) !important;
+}
+
+.my-input .wui-input__label {
+  color: var(--color-fld-num-lbl-def) !important;
+}
+
+.my-input .wui-input__supporting {
+  color: var(--color-fld-num-hlp-def) !important;
+}
+
+.my-input .wui-input__icon {
+  color: var(--color-fld-num-btnrght-def, black) !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+@media (hover: hover) {
+  .my-input:not(.wui-input--is-disabled):hover .wui-input__inner {
+    border-color: var(--color-fld-num-brd-hov) !important;
+  }
+
+  .my-input:not(.wui-input--is-disabled):hover .wui-input__field:not(:disabled):not([readonly]):not(:focus) {
+    border-color: var(--color-fld-num-brd-hov) !important;
+  }
+}
+
+.my-input:focus-within .wui-input__inner {
+  border-color: var(--color-fld-num-brd-foc) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.my-input.wui-input--default:focus-within .wui-input__field:not(:disabled):not([readonly]),
+.my-input.wui-input--default .wui-input__field:focus:not(:disabled) {
+  border-color: var(--color-fld-num-brd-foc) !important;
+  box-shadow: none !important;
+}
+
+.my-input.wui-input--is-disabled .wui-input__inner {
+  background-color: var(--color-fld-num-bg-dis) !important;
+  border-color: var(--color-fld-num-brd-dis) !important;
+}
+
+.my-input.wui-input--is-disabled .wui-input__field {
+  background-color: var(--color-fld-num-bg-dis) !important;
+  border-color: var(--color-fld-num-brd-dis) !important;
+  color: var(--color-fld-num-lbl-dis) !important;
+}
+
+.my-input.wui-input--is-disabled .wui-input__field::placeholder {
+  color: var(--color-fld-num-plc-dis) !important;
+}
+
+.my-input.wui-input--is-disabled .wui-input__title {
+  color: var(--color-fld-num-title-dis) !important;
+}
+
+.my-input.wui-input--is-disabled .wui-input__label {
+  color: var(--color-fld-num-lbl-dis) !important;
+}
+
+.my-input.wui-input--is-disabled .wui-input__supporting {
+  color: var(--color-fld-num-hlp-dis) !important;
+}
+
+.my-input.wui-input--is-disabled .wui-input__icon {
+  color: var(--color-fld-num-btnrght-dis, black) !important;
+}
+
+.my-input--error .wui-input__inner {
+  background-color: var(--color-fld-err-bg-def) !important;
+  border-color: var(--color-fld-err-brd-def) !important;
+}
+
+@media (hover: hover) {
+  .my-input--error:not(.wui-input--is-disabled):hover .wui-input__inner {
+    border-color: var(--color-fld-err-brd-hov) !important;
+  }
+}
+
+.my-input--error:focus-within .wui-input__inner {
+  border-color: var(--color-fld-err-brd-foc) !important;
+}
+
+.my-input--error.wui-input--error:focus-within .wui-input__field:not(:disabled):not([readonly]),
+.my-input--error.wui-input--error .wui-input__field:focus:not(:disabled) {
+  border-color: var(--color-fld-err-brd-foc) !important;
+  box-shadow: none !important;
+}
+
+.my-input--error .wui-input__field {
+  background-color: var(--color-fld-err-bg-def) !important;
+  border-color: var(--color-fld-err-brd-def) !important;
+  color: var(--color-fld-err-lbl-def) !important;
+}
+
+.my-input--error .wui-input__field::placeholder {
+  color: var(--color-fld-err-plc-def) !important;
+}
+
+.my-input--error .wui-input__title {
+  color: var(--color-fld-err-title-def) !important;
+}
+
+.my-input--error .wui-input__label {
+  color: var(--color-fld-err-lbl-def) !important;
+}
+
+.my-input--error .wui-input__supporting {
+  color: var(--color-fld-err-hlp-def) !important;
+}
+
+.my-input--error .wui-input__icon {
+  color: var(--color-fld-num-btnrght-def, black) !important;
+}
+
+.my-input--error.wui-input--is-disabled .wui-input__inner {
+  background-color: var(--color-fld-err-bg-dis) !important;
+  border-color: var(--color-fld-err-brd-dis) !important;
+}
+
+.my-input--error.wui-input--is-disabled .wui-input__field {
+  color: var(--color-fld-err-lbl-dis) !important;
+}
+
+.my-input--error.wui-input--is-disabled .wui-input__field::placeholder {
+  color: var(--color-fld-err-plc-dis) !important;
+}
+
+.my-input--error.wui-input--is-disabled .wui-input__title {
+  color: var(--color-fld-err-title-dis) !important;
+}
+
+.my-input--error.wui-input--is-disabled .wui-input__label {
+  color: var(--color-fld-err-lbl-dis) !important;
+}
+
+.my-input--error.wui-input--is-disabled .wui-input__supporting {
+  color: var(--color-fld-err-hlp-dis) !important;
+}
+
+.my-input--error.wui-input--is-disabled .wui-input__icon {
+  color: var(--color-fld-num-btnrght-dis, black) !important;
+}

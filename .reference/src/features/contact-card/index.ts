@@ -1,0 +1,6 @@
+export { default as ContactCard } from './ui/ContactCard.vue'
+export * from './model/contact-card-tone'
+export * from './model/contact-card-typography'
+export * from './model/use-contact-card-call'
+export * from './model/use-contact-card-presence'
+export * from './model/use-contact-card-status'

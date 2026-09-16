@@ -1,0 +1,120 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "plugins": ["@typescript-eslint"],
+  "globals": {
+    "defineProps": "readonly",
+    "defineEmits": "readonly",
+    "defineExpose": "readonly",
+    "withDefaults": "readonly"
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:vue/base",
+    "plugin:vue/vue3-recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:boundaries/recommended"
+  ],
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module",
+    "ecmaVersion": 2020
+  },
+  "rules": {
+    "semi": ["error", "never"],
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "indent": ["error", 2],
+    "no-unused-expressions": "error",
+    "@typescript-eslint/no-unused-expressions": "error",
+    "func-call-spacing": "off",
+    "no-loss-of-precision": "off",
+    "comma-dangle": ["error", "always-multiline"],
+    "space-before-function-paren": ["error", "always"],
+    "vue/component-name-in-template-casing": ["error", "kebab-case", {
+      "registeredComponentsOnly": false,
+      "ignores": []
+    }],
+    "vue/max-attributes-per-line": "off",
+    "vue/singleline-html-element-content-newline": "off",
+    "object-curly-spacing": ["error", "always"],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "newlines-between": "always",
+        "pathGroups": [
+          { "group": "internal", "position": "after", "pattern": "@/pages/**" },
+          { "group": "internal", "position": "after", "pattern": "@/widgets/**" },
+          { "group": "internal", "position": "after", "pattern": "@/features/**" },
+          { "group": "internal", "position": "after", "pattern": "@/entities/**" },
+          { "group": "internal", "position": "after", "pattern": "@/shared/**" }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"]
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          { "message": "Private imports are prohibited, use public imports instead", "group": ["@/app/**"] },
+          { "message": "Private imports are prohibited, use public imports instead", "group": ["@/pages/*/**"] },
+          { "message": "Private imports are prohibited, use public imports instead", "group": ["@/widgets/*/**"] },
+          { "message": "Private imports are prohibited, use public imports instead", "group": ["@/features/*/**"] },
+          { "message": "Private imports are prohibited, use public imports instead", "group": ["@/entities/*/**"] },
+          { "message": "Private imports are prohibited, use public imports instead", "group": ["@/shared/*/*/**"] },
+          { "message": "Prefer absolute imports instead of relatives (for root modules)", "group": ["../**/app"] },
+          { "message": "Prefer absolute imports instead of relatives (for root modules)", "group": ["../**/pages"] },
+          { "message": "Prefer absolute imports instead of relatives (for root modules)", "group": ["../**/widgets"] },
+          { "message": "Prefer absolute imports instead of relatives (for root modules)", "group": ["../**/features"] },
+          { "message": "Prefer absolute imports instead of relatives (for root modules)", "group": ["../**/entities"] },
+          { "message": "Prefer absolute imports instead of relatives (for root modules)", "group": ["../**/shared"] }
+        ]
+      }
+    ],
+    "boundaries/element-types": [
+      "warn",
+      {
+        "default": "disallow",
+        "rules": [
+          { "from": "app", "allow": ["pages", "widgets", "features", "entities", "shared"] },
+          { "from": "pages", "allow": ["widgets", "features", "entities", "shared"] },
+          { "from": "widgets", "allow": ["features", "entities", "shared"] },
+          { "from": "features", "allow": ["entities", "shared"] },
+          { "from": "entities", "allow": ["entities", "shared"] },
+          { "from": "shared", "allow": ["entities" ,"shared"] }
+        ]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/*.{j,t}s?(x)",
+        "**/*.spec.{j,t}s?(x)"
+      ],
+      "env": {
+        "jest": true
+      },
+      "rules": { "boundaries/element-types": "off" }
+    }
+  ],
+  "settings": {
+    "import/resolver": { "typescript": {} },
+    "boundaries/elements": [
+      { "type": "app", "pattern": "app/*" },
+      { "type": "pages", "pattern": "pages/*" },
+      { "type": "widgets", "pattern": "widgets/*" },
+      { "type": "features", "pattern": "features/*" },
+      { "type": "entities", "pattern": "entities/*" },
+      { "type": "shared", "pattern": "shared/*" }
+    ],
+    "boundaries/ignore": ["**/*.spec.*"]
+  }
+}

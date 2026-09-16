@@ -1,0 +1,256 @@
+
+@import "tailwindcss";
+@import "@wui/common-library/foundation.css";
+@import "@wui/common-library/palette.css";
+@import "./theme.css";
+@import "./light-1.css";
+@import "./lsDark-1.css";
+@import "./tokens.css";
+@import "./table.css";
+/* turret-lib after local theme: package tokens win over dealing duplicates */
+@import "@rtu-turret-system/turret-lib/style.css";
+
+
+#app {
+  font-family: var(--font-inter);
+  height: 100%;
+  overflow: hidden;
+}
+
+html,
+body {
+  font-family: var(--font-inter);
+  background-color: var(--color-bg-base-bg1);
+  height: 100%;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+  border-radius: var(--radius-4);
+}
+
+::-webkit-scrollbar-track,
+*:hover::-webkit-scrollbar-track {
+  background-color: var(--color-black-500);
+}
+
+::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-black-335);
+  border-radius: var(--radius-8);
+}
+
+/* Отключение выделения текста */
+* {
+  user-select: none;
+  -webkit-user-select: none; /* Для Safari */
+  -moz-user-select: none; /* Для старых версий Firefox */
+  -ms-user-select: none; /* Для IE/Edge */
+}
+
+.app-select {
+  background-color: var(--color-black-865) !important;
+  border: none !important;
+  border-radius: var(--radius-4) !important;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25) inset;
+}
+
+.app-input {
+  background-color: var(--color-black-865) !important;
+  border: none !important;
+  border-radius: var(--radius-4) !important;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25) inset;
+}
+
+.app-input:disabled {
+  background-color: var(--color-black-865) !important;
+  border: none !important;
+  color: var(--color-black-500) !important;
+}
+
+.number-input--without-arrows input::-webkit-outer-spin-button,
+.number-input--without-arrows input::-webkit-inner-spin-button {
+  display: none;
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input--without-arrows input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.is-selected {
+  box-shadow: 0 0 0 2px #fff !important;
+}
+
+.is-selected-line {
+  box-shadow: 0 0 0 2px #72b432 !important;
+}
+
+.wui-combobox {
+  border-color: var(--color-black-600) !important;
+  line-height: 0.75rem !important;
+}
+
+.wui-combobox__list {
+  background-color: var(--color-black-865) !important;
+  border-color: var(--color-black-600) !important;
+}
+
+.wui-combobox__list-item {
+  color: var(--color-menu-item-text-label-def, var(--color-white)) !important;
+}
+
+.wui-combobox__list-item:hover {
+  background-color: var(--color-menu-item-bg-hov, var(--color-black-800)) !important;
+}
+
+.wui-combobox__list-item--selected {
+  background-color: var(--color-menu-item-bg-pres, var(--color-black-800)) !important;
+}
+
+/*
+ * WuiCheckbox рисует native input.peer.sr-only + кастомный __box.
+ * `sr-only` из Tailwind в CSS либы не попадает (класс только в node_modules) → двойной чекбокс.
+ */
+.wui-checkbox > input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/*
+ * WuiInputSwitch — тот же peer.sr-only; без правила виден системный checkbox рядом с switch.
+ */
+.wui-input-switch > input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.contact-list-item {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 1rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-8);
+  cursor: pointer;
+}
+
+.contact-list-item__name {
+  color: #fff;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.contact-list-item__date {
+  overflow: hidden;
+  color: #fff;
+  font-size: 13px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-list-item__info {
+  overflow: hidden;
+  color: var(--color-black-465);
+  font-size: 13px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-list-item:hover {
+  background-color: var(--color-black-800);
+}
+
+.contact-list-item:hover .contact-list-item__date {
+  color: #fff;
+}
+
+.contact-list-item:hover .contact-list-item__info {
+  color: #fff;
+}
+
+.shake-animation {
+  animation: shake 0.5s;
+  animation-iteration-count: 1;
+}
+
+
+@keyframes card-pulse-orange {
+  0%, 100% {
+    background-color: var(--color-threshold-tints-300);
+  }
+
+  10%, 90% {
+    background-color: var(--color-threshold-tints-400);
+  }
+
+  20%, 80% {
+    background-color: var(--color-threshold-tints-500);
+  }
+
+  30%, 70% {
+    background-color: var(--color-threshold-tints-600);
+  }
+
+  50% {
+    background-color: var(--color-threshold-tints-700);
+  }
+}
+
+
+.pulse-green {
+  animation: card-pulse-green 1s infinite;
+}
+
+.pulse-green-border {
+  animation: card-pulse-green-border 1s infinite;
+}
+
+.pulse-orange {
+  animation: card-pulse-orange 2s infinite;
+  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000;
+  will-change: transform;
+}
+
+.pulse-red {
+  animation: card-pulse-red 2s infinite;
+}
+
+/* Темная тема для audioPlayer */
+.wui_audioPlayer__time_text.text-black {
+  color: #fff;
+}
+
+.wui_audioPlayer__time_text + .volume .slider__wrapper {
+  background-color: var(--color-black-600);
+  padding-left: 0.5rem;
+}
+
+.wui_audioPlayer__time_text + .volume .slider__wrapper .slider {
+  margin-top: 2px;
+}
+
+.v-touch {
+  opacity: 0.5;
+}

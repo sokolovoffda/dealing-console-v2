@@ -1,0 +1,242 @@
+export const realMediaDevice = [
+  {
+    'deviceId': 'default',
+    'kind': 'audioinput',
+    'label': 'Default',
+    'groupId': '8376a6a207f1c123b92a3aa2a20c1a37d1b00e6deac343cedf58120b8980da41',
+  },
+  {
+    'deviceId': 'cda843a7fa726d6b79b9705fb89548e7040210ed13eb701a4206086ac42d6da1',
+    'kind': 'audioinput',
+    'label': 'Module_L1',
+    'groupId': '6cf882351e9ca9be55f410dd8c9a427505bcd02b8d5745cdd794f2453d12449a',
+  },
+  {
+    'deviceId': 'd899772c57b7855161fa073dbef28ee16e0c3163e67899b31cd70da39c8b52f9',
+    'kind': 'audioinput',
+    'label': 'Module_L2',
+    'groupId': '25e202e98331258cbe39ae41c82885d15d3944dd185856c70c8909ec0cb9aaf5',
+  },
+  {
+    'deviceId': 'd4ba11e5c0d9ce9ffecb2f5ecdb1d842b6df03dfb91e6f80da58bf3f48a5dea2',
+    'kind': 'audioinput',
+    'label': 'Module_R1',
+    'groupId': '938fe6172d8234213c1d50bb471ee310c1f602c9745b06e18db3d22bef31ba32',
+  },
+  {
+    'deviceId': 'b8f2bf59f2e8c0d634938314064a0f5d39437899148271617adb3ab498ade411',
+    'kind': 'audioinput',
+    'label': 'Module_R2',
+    'groupId': '6fc8c925b7198d9153c57748cddbb2707416bab186d7dcbe14e2c2dcfe226bc4',
+  },
+  {
+    'deviceId': '6c44d3b6b394ec6012ef9e24c4592526aab5b86da885a53b13c3d8627fe92980',
+    'kind': 'audioinput',
+    'label': 'Main',
+    'groupId': '606d68331acb07a216d20efce5b987bd5c402a7de82f32b5cecf73bdd092d24f',
+  },
+  {
+    'deviceId': '706bf38920d498a3f1392fabf080e82d4bd95e89cdf5f52a31ed95c38c86cab9',
+    'kind': 'audioinput',
+    'label': 'Встроенное аудио Rear_Mic_In',
+    'groupId': '7c633ab35208191c24e8c5dba756bec2a7dd92aee6389e470e560c43f783533c',
+  },
+  {
+    'deviceId': 'e26bcdb15a599f80e10dc64c72de26e7af600cbfc11d2089e51c1e7cdd20d261',
+    'kind': 'audioinput',
+    'label': 'Встроенное аудио Rear_Line_In',
+    'groupId': '7c633ab35208191c24e8c5dba756bec2a7dd92aee6389e470e560c43f783533c',
+  },
+  {
+    'deviceId': '857c573325c39e554f77bf28bdfe30af5fc3822c042742cc9462002c21ef3ab7',
+    'kind': 'audioinput',
+    'label': 'Main (echo cancelled with Main)',
+    'groupId': '516a222881a819ea806d14d9074c8cd630bbd0729a211c28aef5c6c5cfc35fb4',
+  },
+  {
+    'deviceId': 'default',
+    'kind': 'audiooutput',
+    'label': 'Default',
+    'groupId': 'default',
+  },
+  {
+    'deviceId': 'd8c4cd78dea209c6dedc3cfa6c4bdc25de7e3c7f460cc72dd10f407554bb56f7',
+    'kind': 'audiooutput',
+    'label': 'Module_L1',
+    'groupId': '6cf882351e9ca9be55f410dd8c9a427505bcd02b8d5745cdd794f2453d12449a',
+  },
+  {
+    'deviceId': 'ac021618f0537173f8f20a3c51e6194d62b167327c1a4e9167a57d74924e2975',
+    'kind': 'audiooutput',
+    'label': 'Module_L2',
+    'groupId': '25e202e98331258cbe39ae41c82885d15d3944dd185856c70c8909ec0cb9aaf5',
+  },
+  {
+    'deviceId': '9c101e6c6f846a8a7daeb2a1c7ea5271834e6d3bb8fa3481c20981ed4687f84c',
+    'kind': 'audiooutput',
+    'label': 'Module_R1',
+    'groupId': '938fe6172d8234213c1d50bb471ee310c1f602c9745b06e18db3d22bef31ba32',
+  },
+  {
+    'deviceId': 'a2a0f6558389eedec6af2c59929f40409ebbe42f1d9d44916a21dbd09654bbcb',
+    'kind': 'audiooutput',
+    'label': 'Module_R2',
+    'groupId': '6fc8c925b7198d9153c57748cddbb2707416bab186d7dcbe14e2c2dcfe226bc4',
+  },
+  {
+    'deviceId': 'd695643ddfacc9d1d1b879f01cbf859e5e6b39a97533cf567d22df3527555d84',
+    'kind': 'audiooutput',
+    'label': 'Main',
+    'groupId': '606d68331acb07a216d20efce5b987bd5c402a7de82f32b5cecf73bdd092d24f',
+  },
+  {
+    'deviceId': '51c3c04123914fb9b933821fe2597e8c1f983849246babc489a990e119c5805f',
+    'kind': 'audiooutput',
+    'label': 'Встроенное аудио Rear_Headphone',
+    'groupId': '7c633ab35208191c24e8c5dba756bec2a7dd92aee6389e470e560c43f783533c',
+  },
+  {
+    'deviceId': '61000cc13086fdea8d05b2c74d2fd164925cccdc8168198d2029f17c8f6422ed',
+    'kind': 'audiooutput',
+    'label': 'Main (echo cancelled with Main)',
+    'groupId': 'ee2bb044199b33f0fbadad55ad53fb027c6e15ffdc7644a7062e2ddb90bab632',
+  },
+]
+
+export const controllerMediaDevice = [
+  {
+    'position': 'center',
+    'available': true,
+    'id': 'hub',
+    'name': 'HUB',
+    'pcb': 'САБУ.466256.002',
+    'revision': 'UNKNOWN',
+    'serial': 'UNKNOWN',
+    'type': 0,
+    'audiolabel': 'Main',
+    'firmware_version': '2.1.6A',
+    'features': {
+      'audio_in': true,
+      'audio_out': true,
+      'display': true,
+    },
+    'sinks': [
+      'Main',
+      'Rear_Headphone',
+      'Rear_Line_Out',
+    ],
+    'sources': [
+      'Main',
+      'Rear_Mic_In',
+      'Rear_Line_In',
+    ],
+    'device_config': [
+      'UNKNOWN',
+    ],
+    'device_note': [
+      'UNKNOWN',
+    ],
+    'mcu_uuid': 'c15d3333303038174e393733',
+  },
+  {
+    'position': 'L1',
+    'available': true,
+    'id': 'goose_L1',
+    'name': 'GOOSE',
+    'pcb': 'САБУ.426439.011',
+    'revision': 2,
+    'serial': '0102240000000001',
+    'type': 1,
+    'audiolabel': 'Module_L1',
+    'firmware_version': '0.1',
+    'features': {
+      'audio_in': true,
+      'audio_out': false,
+      'display': false,
+    },
+    'sinks': [
+      'Module_L1',
+    ],
+    'sources': [
+      'Module_L1',
+    ],
+  },
+  {
+    'position': 'L2',
+    'available': true,
+    'id': 'handset_L2',
+    'name': 'HANDSET',
+    'pcb': 'САБУ.426439.016',
+    'revision': 2,
+    'serial': '0202240000000003',
+    'type': 2,
+    'audiolabel': 'Module_L2',
+    'firmware_version': '0.1',
+    'features': {
+      'audio_in': true,
+      'audio_out': true,
+      'display': false,
+    },
+    'sinks': [
+      'Module_L2',
+    ],
+    'sources': [
+      'Module_L2',
+    ],
+  },
+  {
+    'position': 'L3',
+    'available': false,
+  },
+  {
+    'position': 'R1',
+    'available': true,
+    'id': 'goose_R1',
+    'name': 'GOOSE',
+    'pcb': 'САБУ.426439.011',
+    'revision': 2,
+    'serial': '0102240000000003',
+    'type': 1,
+    'audiolabel': 'Module_R1',
+    'firmware_version': '0.1',
+    'features': {
+      'audio_in': true,
+      'audio_out': false,
+      'display': false,
+    },
+    'sinks': [
+      'Module_R1',
+    ],
+    'sources': [
+      'Module_R1',
+    ],
+  },
+  {
+    'position': 'R2',
+    'available': true,
+    'id': 'handset_R2',
+    'name': 'HANDSET',
+    'pcb': 'САБУ.426439.016',
+    'revision': 2,
+    'serial': '0202240000000001',
+    'type': 2,
+    'audiolabel': 'Module_R2',
+    'firmware_version': '0.1',
+    'features': {
+      'audio_in': true,
+      'audio_out': true,
+      'display': false,
+    },
+    'sinks': [
+      'Module_R2',
+    ],
+    'sources': [
+      'Module_R2',
+    ],
+  },
+  {
+    'position': 'R3',
+    'available': false,
+  },
+]
+

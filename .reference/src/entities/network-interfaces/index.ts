@@ -1,0 +1,1 @@
+export { default as NetworkInterfaces } from './ui/network-interfaces.vue'

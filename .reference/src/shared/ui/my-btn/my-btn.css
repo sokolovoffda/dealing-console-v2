@@ -1,0 +1,513 @@
+.my-btn {
+  box-sizing: border-box;
+  border: 1px solid var(--my-btn-brd-def, var(--color-transparent)) !important;
+  background-color: var(--my-btn-bg-def, var(--color-transparent)) !important;
+  color: var(--my-btn-color-def, currentColor) !important;
+}
+
+.my-btn .wui-btn__content {
+  box-sizing: border-box;
+}
+
+.my-btn .wui-icon,
+.my-btn .wui-btn__content {
+  color: inherit;
+}
+
+.my-btn:focus-visible {
+  outline: 1px solid var(--my-btn-outline, currentColor);
+  outline-offset: 1px;
+}
+
+@media (hover: hover) {
+  .my-btn:not(.wui-btn--is-disabled):hover {
+    border-color: var(--my-btn-brd-hov, var(--my-btn-brd-def, var(--color-transparent))) !important;
+    background-color: var(--my-btn-bg-hov, var(--my-btn-bg-def, var(--color-transparent))) !important;
+    color: var(--my-btn-color-hov, var(--my-btn-color-def, currentColor)) !important;
+  }
+}
+
+.my-btn:not(.wui-btn--is-disabled):active {
+  border-color: var(--my-btn-brd-pres, var(--my-btn-brd-hov, var(--my-btn-brd-def, var(--color-transparent)))) !important;
+  background-color: var(--my-btn-bg-pres, var(--my-btn-bg-hov, var(--my-btn-bg-def, var(--color-transparent)))) !important;
+  color: var(--my-btn-color-pres, var(--my-btn-color-hov, var(--my-btn-color-def, currentColor))) !important;
+}
+
+.my-btn.wui-btn--is-disabled {
+  border-color: var(--my-btn-brd-dis, var(--color-transparent)) !important;
+  background-color: var(--my-btn-bg-dis, var(--color-transparent)) !important;
+  color: var(--my-btn-color-dis, currentColor) !important;
+}
+
+.my-btn--fixed-size.my-btn--size-24 {
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-24.my-btn--icon {
+  width: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-32 {
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-32.my-btn--icon {
+  width: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-40 {
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-40.my-btn--icon {
+  width: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-48 {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-48.my-btn--icon {
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-72 {
+  height: 72px !important;
+  min-height: 72px !important;
+  max-height: 72px !important;
+}
+
+.my-btn--fixed-size.my-btn--size-72.my-btn--icon {
+  width: 72px !important;
+  min-width: 72px !important;
+  max-width: 72px !important;
+}
+
+.my-btn--height-80 {
+  height: 80px !important;
+  min-height: 80px !important;
+  max-height: 80px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.my-btn--height-80 .wui-btn__content {
+  height: 80px !important;
+  min-height: 80px !important;
+  max-height: 80px !important;
+  align-items: center !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.my-btn--button.my-btn--neutcon.my-btn--tone-base {
+  --my-btn-bg-def: var(--color-btn-neutcon-base-bg-def);
+  --my-btn-bg-hov: var(--color-btn-neutcon-base-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-neutcon-base-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-neutcon-base-bg-dis);
+  --my-btn-color-def: var(--color-btn-neutcon-base-icon-def);
+  --my-btn-color-dis: var(--color-btn-neutcon-base-icon-dis);
+  --my-btn-brd-def: var(--color-btn-neutcon-base-brd-def);
+  --my-btn-brd-hov: var(--color-btn-neutcon-base-brd-hov);
+  --my-btn-brd-pres: var(--color-btn-neutcon-base-brd-pres);
+  --my-btn-brd-dis: var(--color-btn-neutcon-base-brd-dis);
+}
+
+.my-btn--button.my-btn--neutcon.my-btn--tone-dark {
+  --my-btn-bg-def: var(--color-btn-neutcon-dark-bg-def);
+  --my-btn-bg-hov: var(--color-btn-neutcon-dark-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-neutcon-dark-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-neutcon-dark-bg-dis);
+  --my-btn-color-def: var(--color-btn-neutcon-dark-icon-def);
+  --my-btn-color-dis: var(--color-btn-neutcon-dark-icon-dis);
+  --my-btn-brd-def: var(--color-btn-neutcon-dark-brd-def);
+  --my-btn-brd-hov: var(--color-btn-neutcon-dark-brd-hov);
+  --my-btn-brd-pres: var(--color-btn-neutcon-dark-brd-pres);
+  --my-btn-brd-dis: var(--color-btn-neutcon-dark-brd-dis);
+}
+
+.my-btn--button.my-btn--neutcon.my-btn--tone-alpha {
+  --my-btn-bg-def: var(--color-btn-neutcon-alpha-bg-def);
+  --my-btn-bg-hov: var(--color-btn-neutcon-alpha-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-neutcon-alpha-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-neutcon-alpha-bg-dis);
+  --my-btn-color-def: var(--color-btn-neutcon-alpha-icon-def-def);
+  --my-btn-color-dis: var(--color-btn-neutcon-alpha-icon-def-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-pres: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--button.my-btn--neutcon.my-btn--tone-alpha.my-btn--active-tone-alpha-neg {
+  --my-btn-bg-def: var(--color-btn-neutcon-alpha-bg-def);
+  --my-btn-bg-hov: var(--color-btn-neutcon-alpha-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-neutcon-alpha-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-neutcon-alpha-bg-dis);
+  --my-btn-color-def: var(--color-btn-neutcon-alpha-icon-neg-def);
+  --my-btn-color-dis: var(--color-btn-neutcon-alpha-icon-neg-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-pres: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--button.my-btn--waitcon.my-btn--tone-alpha {
+  --my-btn-bg-def: var(--color-btn-waitcon-alpha-bg-def);
+  --my-btn-bg-hov: var(--color-btn-waitcon-alpha-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-waitcon-alpha-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-waitcon-alpha-bg-dis);
+  --my-btn-color-def: var(--color-btn-waitcon-alpha-icon-def-def);
+  --my-btn-color-dis: var(--color-btn-waitcon-alpha-icon-def-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-pres: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--button.my-btn--callcon.my-btn--tone-alpha {
+  --my-btn-bg-def: var(--color-btn-callcon-alpha-bg-def);
+  --my-btn-bg-hov: var(--color-btn-callcon-alpha-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-callcon-alpha-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-callcon-alpha-bg-dis);
+  --my-btn-color-def: var(--color-btn-callcon-alpha-icon-def-def);
+  --my-btn-color-dis: var(--color-btn-callcon-alpha-icon-def-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-pres: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--button.my-btn--warncon.my-btn--tone-alpha {
+  --my-btn-bg-def: var(--color-btn-warncon-alpha-bg-def);
+  --my-btn-bg-hov: var(--color-btn-warncon-alpha-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-warncon-alpha-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-warncon-alpha-bg-dis);
+  --my-btn-color-def: var(--color-btn-warncon-alpha-icon-def-def);
+  --my-btn-color-dis: var(--color-btn-warncon-alpha-icon-def-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-pres: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--button.my-btn--negcon.my-btn--tone-alpha {
+  --my-btn-bg-def: var(--color-btn-negcon-alpha-bg-def);
+  --my-btn-bg-hov: var(--color-btn-negcon-alpha-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-negcon-alpha-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-negcon-alpha-bg-dis);
+  --my-btn-color-def: var(--color-btn-negcon-alpha-icon-def-def);
+  --my-btn-color-dis: var(--color-btn-negcon-alpha-icon-def-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-pres: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--button.my-btn--waitcon.my-btn--tone-alpha.my-btn--icon-tone-soft {
+  --my-btn-color-def: var(--color-btn-waitcon-alpha-icon-soft-def);
+}
+
+.my-btn--button.my-btn--callcon.my-btn--tone-alpha.my-btn--icon-tone-soft {
+  --my-btn-color-def: var(--color-btn-callcon-alpha-icon-soft-def);
+}
+
+.my-btn--button.my-btn--warncon.my-btn--tone-alpha.my-btn--icon-tone-soft {
+  --my-btn-color-def: var(--color-btn-warncon-alpha-icon-soft-def);
+}
+
+.my-btn--button.my-btn--negcon.my-btn--tone-alpha.my-btn--icon-tone-soft {
+  --my-btn-color-def: var(--color-btn-negcon-alpha-icon-soft-def);
+}
+
+
+.my-btn--button.my-btn--waitcon.my-btn--tone-base {
+  --my-btn-bg-def: var(--color-btn-waitcon-base-bg-def);
+  --my-btn-bg-hov: var(--color-btn-waitcon-base-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-waitcon-base-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-waitcon-base-bg-dis);
+  --my-btn-color-def: var(--color-btn-waitcon-base-icon-def);
+  --my-btn-color-dis: var(--color-btn-waitcon-base-icon-dis);
+  --my-btn-brd-def: var(--color-btn-waitcon-base-brd-def);
+  --my-btn-brd-hov: var(--color-btn-waitcon-base-brd-hov);
+  --my-btn-brd-pres: var(--color-btn-waitcon-base-brd-pres);
+  --my-btn-brd-dis: var(--color-btn-waitcon-base-brd-dis);
+}
+
+.my-btn--button.my-btn--callcon.my-btn--tone-base {
+  --my-btn-bg-def: var(--color-btn-callcon-base-bg-def);
+  --my-btn-bg-hov: var(--color-btn-callcon-base-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-callcon-base-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-callcon-base-bg-dis);
+  --my-btn-color-def: var(--color-btn-callcon-base-icon-def);
+  --my-btn-color-dis: var(--color-btn-callcon-base-icon-dis);
+  --my-btn-brd-def: var(--color-btn-callcon-base-brd-def);
+  --my-btn-brd-hov: var(--color-btn-callcon-base-brd-hov);
+  --my-btn-brd-pres: var(--color-btn-callcon-base-brd-pres);
+  --my-btn-brd-dis: var(--color-btn-callcon-base-brd-dis);
+}
+
+.my-btn--button.my-btn--poscon.my-btn--tone-base {
+  --my-btn-bg-def: var(--color-btn-poscon-base-bg-def);
+  --my-btn-bg-hov: var(--color-btn-poscon-base-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-poscon-base-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-poscon-base-bg-dis);
+  --my-btn-color-def: var(--color-btn-poscon-base-icon-def);
+  --my-btn-color-dis: var(--color-btn-poscon-base-icon-dis);
+  --my-btn-brd-def: var(--color-btn-poscon-base-brd-def);
+  --my-btn-brd-hov: var(--color-btn-poscon-base-brd-hov);
+  --my-btn-brd-pres: var(--color-btn-poscon-base-brd-pres);
+  --my-btn-brd-dis: var(--color-btn-poscon-base-brd-dis);
+}
+
+.my-btn--button.my-btn--warncon.my-btn--tone-base {
+  --my-btn-bg-def: var(--color-btn-warncon-base-bg-def);
+  --my-btn-bg-hov: var(--color-btn-warncon-base-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-warncon-base-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-warncon-base-bg-dis);
+  --my-btn-color-def: var(--color-btn-warncon-base-icon-def);
+  --my-btn-color-dis: var(--color-btn-warncon-base-icon-dis);
+  --my-btn-brd-def: var(--color-btn-warncon-base-brd-def);
+  --my-btn-brd-hov: var(--color-btn-warncon-base-brd-hov);
+  --my-btn-brd-pres: var(--color-btn-warncon-base-brd-pres);
+  --my-btn-brd-dis: var(--color-btn-warncon-base-brd-dis);
+}
+
+.my-btn--button.my-btn--negcon.my-btn--tone-base {
+  --my-btn-bg-def: var(--color-btn-negcon-base-bg-def);
+  --my-btn-bg-hov: var(--color-btn-negcon-base-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-negcon-base-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-negcon-base-bg-dis);
+  --my-btn-color-def: var(--color-btn-negcon-base-icon-def);
+  --my-btn-color-dis: var(--color-btn-negcon-base-icon-dis);
+  --my-btn-brd-def: var(--color-btn-negcon-base-brd-def);
+  --my-btn-brd-hov: var(--color-btn-negcon-base-brd-hov);
+  --my-btn-brd-pres: var(--color-btn-negcon-base-brd-pres);
+  --my-btn-brd-dis: var(--color-btn-negcon-base-brd-dis);
+}
+
+.my-btn--button.my-btn--twolinecon {
+  --my-btn-bg-def: var(--color-btn-twolinecon-bg-def);
+  --my-btn-bg-hov: var(--color-btn-twolinecon-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-twolinecon-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-twolinecon-bg-dis);
+  --my-btn-color-def: var(--color-btn-twolinecon-icon-def-def);
+  --my-btn-color-dis: var(--color-btn-twolinecon-icon-def-dis);
+  --my-btn-text-color-def: var(--color-btn-twolinecon-txt-def);
+  --my-btn-text-color-dis: var(--color-btn-twolinecon-txt-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-pres: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--button.my-btn--twolinecon.my-btn--icon-tone-neg {
+  --my-btn-color-def: var(--color-btn-twolinecon-icon-neg-def);
+  --my-btn-color-dis: var(--color-btn-twolinecon-icon-neg-dis);
+}
+
+.my-btn--button.my-btn--twolinecon.my-btn--icon-tone-neutcon {
+  --my-btn-color-def: var(--color-tog-neutcon-twolinecon-icon-active-def);
+}
+
+.my-btn--button.my-btn--twolinecon.my-btn--icon-tone-waitcon {
+  --my-btn-color-def: var(--color-tog-waitcon-twolinecon-icon-active-def);
+}
+
+.my-btn--button.my-btn--twolinecon.my-btn--icon-tone-callcon {
+  --my-btn-color-def: var(--color-tog-callcon-twolinecon-icon-active-def);
+}
+
+.my-btn--button.my-btn--twolinecon.my-btn--icon-tone-warncon {
+  --my-btn-color-def: var(--color-tog-warncon-twolinecon-icon-active-def);
+}
+
+.my-btn--button.my-btn--twolinecon.my-btn--icon-tone-negcon {
+  --my-btn-color-def: var(--color-tog-negcon-twolinecon-icon-active-def);
+}
+
+.my-btn--button.my-btn--twolinecon .wui-btn__content {
+  color: var(--my-btn-text-color-def) !important;
+}
+
+.my-btn--button.my-btn--twolinecon.wui-btn--is-disabled .wui-btn__content {
+  color: var(--my-btn-text-color-dis) !important;
+}
+
+.my-btn--button.my-btn--twolinecon:focus-visible {
+  outline-color: var(--color-foc-def, currentColor);
+}
+
+.my-btn--brandcon.my-btn--active {
+  --my-btn-bg-def: var(--color-tog-brandcon-bg-active-def);
+  --my-btn-bg-dis: var(--color-tog-brandcon-bg-active-dis);
+  --my-btn-color-def: var(--color-tog-brandcon-icon-active-def);
+  --my-btn-color-dis: var(--color-tog-brandcon-icon-active-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--brandcon.my-btn--inactive {
+  --my-btn-bg-def: var(--color-tog-brandcon-bg-inactive-def);
+  --my-btn-bg-hov: var(--color-tog-brandcon-bg-inactive-hov);
+  --my-btn-bg-dis: var(--color-tog-brandcon-bg-inactive-dis);
+  --my-btn-color-def: var(--color-tog-brandcon-icon-inactive-def);
+  --my-btn-color-dis: var(--color-tog-brandcon-icon-inactive-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--toggle.my-btn--neutcon.my-btn--tone-base.my-btn--active {
+  --my-btn-bg-def: var(--color-tog-neutcon-base-bg-active-def);
+  --my-btn-bg-dis: var(--color-tog-neutcon-base-bg-active-dis);
+  --my-btn-color-def: var(--color-tog-neutcon-base-icon-active-def);
+  --my-btn-color-dis: var(--color-tog-neutcon-base-icon-active-dis);
+  --my-btn-brd-def: var(--color-tog-neutcon-base-bor-active-def);
+  --my-btn-brd-dis: var(--color-tog-neutcon-base-bor-active-dis);
+}
+
+.my-btn--toggle.my-btn--neutcon.my-btn--tone-base.my-btn--inactive {
+  --my-btn-bg-def: var(--color-tog-neutcon-base-bg-inactive-def);
+  --my-btn-bg-hov: var(--color-tog-neutcon-base-bg-inactive-hov);
+  --my-btn-bg-dis: var(--color-tog-neutcon-base-bg-inactive-dis);
+  --my-btn-color-def: var(--color-tog-neutcon-base-icon-inactive-def);
+  --my-btn-color-dis: var(--color-tog-neutcon-base-icon-inactive-dis);
+  --my-btn-brd-def: var(--color-tog-neutcon-base-bor-inactive-def);
+  --my-btn-brd-hov: var(--color-tog-neutcon-base-bor-inactive-hov);
+  --my-btn-brd-dis: var(--color-tog-neutcon-base-bor-inactive-dis);
+}
+
+.my-btn--toggle.my-btn--neutcon.my-btn--tone-dark.my-btn--active {
+  --my-btn-bg-def: var(--color-tog-neutcon-dark-bg-active-def);
+  --my-btn-bg-dis: var(--color-tog-neutcon-dark-bg-active-dis);
+  --my-btn-color-def: var(--color-tog-neutcon-dark-icon-active-def);
+  --my-btn-color-dis: var(--color-tog-neutcon-dark-icon-active-dis);
+  --my-btn-brd-def: var(--color-tog-neutcon-dark-bor-active-def);
+  --my-btn-brd-dis: var(--color-tog-neutcon-dark-bor-active-dis);
+}
+
+.my-btn--toggle.my-btn--neutcon.my-btn--tone-dark.my-btn--inactive {
+  --my-btn-bg-def: var(--color-tog-neutcon-dark-bg-inactive-def);
+  --my-btn-bg-hov: var(--color-tog-neutcon-dark-bg-inactive-hov);
+  --my-btn-bg-dis: var(--color-tog-neutcon-dark-bg-inactive-dis);
+  --my-btn-color-def: var(--color-tog-neutcon-dark-icon-inactive-def);
+  --my-btn-color-dis: var(--color-tog-neutcon-dark-icon-inactive-dis);
+  --my-btn-brd-def: var(--color-tog-neutcon-dark-bor-inactive-def);
+  --my-btn-brd-hov: var(--color-tog-neutcon-dark-bor-inactive-hov);
+  --my-btn-brd-dis: var(--color-tog-neutcon-dark-bor-inactive-dis);
+}
+
+.my-btn--toggle.my-btn--waitcon.my-btn--tone-base.my-btn--active {
+  --my-btn-bg-def: var(--color-tog-waitcon-base-bg-active-def);
+  --my-btn-bg-dis: var(--color-tog-waitcon-base-bg-active-dis);
+  --my-btn-color-def: var(--color-tog-waitcon-base-icon-active-def);
+  --my-btn-color-dis: var(--color-tog-waitcon-base-icon-active-dis);
+  --my-btn-brd-def: var(--color-tog-waitcon-base-bor-active-def);
+  --my-btn-brd-dis: var(--color-tog-waitcon-base-bor-active-dis);
+}
+
+.my-btn--toggle.my-btn--waitcon.my-btn--tone-base.my-btn--inactive {
+  --my-btn-bg-def: var(--color-tog-waitcon-base-bg-inactive-def);
+  --my-btn-bg-hov: var(--color-tog-waitcon-base-bg-inactive-hov);
+  --my-btn-bg-dis: var(--color-tog-waitcon-base-bg-inactive-dis);
+  --my-btn-color-def: var(--color-tog-waitcon-base-icon-inactive-def);
+  --my-btn-color-dis: var(--color-tog-waitcon-base-icon-inactive-dis);
+  --my-btn-brd-def: var(--color-tog-waitcon-base-bor-inactive-def);
+  --my-btn-brd-hov: var(--color-tog-waitcon-base-bor-inactive-hov);
+  --my-btn-brd-dis: var(--color-tog-waitcon-base-bor-inactive-dis);
+}
+
+.my-btn--toggle.my-btn--callcon.my-btn--tone-base.my-btn--active {
+  --my-btn-bg-def: var(--color-tog-callcon-base-bg-active-def);
+  --my-btn-bg-dis: var(--color-tog-callcon-base-bg-active-dis);
+  --my-btn-color-def: var(--color-tog-callcon-base-icon-active-def);
+  --my-btn-color-dis: var(--color-tog-callcon-base-icon-active-dis);
+  --my-btn-brd-def: var(--color-tog-callcon-base-bor-active-def);
+  --my-btn-brd-dis: var(--color-tog-callcon-base-bor-active-dis);
+}
+
+.my-btn--toggle.my-btn--callcon.my-btn--tone-base.my-btn--inactive {
+  --my-btn-bg-def: var(--color-tog-callcon-base-bg-inactive-def);
+  --my-btn-bg-hov: var(--color-tog-callcon-base-bg-inactive-hov);
+  --my-btn-bg-dis: var(--color-tog-callcon-base-bg-inactive-dis);
+  --my-btn-color-def: var(--color-tog-callcon-base-icon-inactive-def);
+  --my-btn-color-dis: var(--color-tog-callcon-base-icon-inactive-dis);
+  --my-btn-brd-def: var(--color-tog-callcon-base-bor-inactive-def);
+  --my-btn-brd-hov: var(--color-tog-callcon-base-bor-inactive-hov);
+  --my-btn-brd-dis: var(--color-tog-callcon-base-bor-inactive-dis);
+}
+
+.my-btn--toggle.my-btn--warncon.my-btn--tone-base.my-btn--active {
+  --my-btn-bg-def: var(--color-tog-warncon-base-bg-active-def);
+  --my-btn-bg-dis: var(--color-tog-warncon-base-bg-active-dis);
+  --my-btn-color-def: var(--color-tog-warncon-base-icon-active-def);
+  --my-btn-color-dis: var(--color-tog-warncon-base-icon-active-dis);
+  --my-btn-brd-def: var(--color-tog-warncon-base-bor-active-def);
+  --my-btn-brd-dis: var(--color-tog-warncon-base-bor-active-dis);
+}
+
+.my-btn--toggle.my-btn--warncon.my-btn--tone-base.my-btn--inactive {
+  --my-btn-bg-def: var(--color-tog-warncon-base-bg-inactive-def);
+  --my-btn-bg-hov: var(--color-tog-warncon-base-bg-inactive-hov);
+  --my-btn-bg-dis: var(--color-tog-warncon-base-bg-inactive-dis);
+  --my-btn-color-def: var(--color-tog-warncon-base-icon-inactive-def);
+  --my-btn-color-dis: var(--color-tog-warncon-base-icon-inactive-dis);
+  --my-btn-brd-def: var(--color-tog-warncon-base-bor-inactive-def);
+  --my-btn-brd-hov: var(--color-tog-warncon-base-bor-inactive-hov);
+  --my-btn-brd-dis: var(--color-tog-warncon-base-bor-inactive-dis);
+}
+
+.my-btn--toggle.my-btn--negcon.my-btn--tone-base.my-btn--active {
+  --my-btn-bg-def: var(--color-tog-negcon-base-bg-active-def);
+  --my-btn-bg-dis: var(--color-tog-negcon-base-bg-active-dis);
+  --my-btn-color-def: var(--color-tog-negcon-base-icon-active-def);
+  --my-btn-color-dis: var(--color-tog-negcon-base-icon-active-dis);
+  --my-btn-brd-def: var(--color-tog-negcon-base-bor-active-def);
+  --my-btn-brd-dis: var(--color-tog-negcon-base-bor-active-dis);
+}
+
+.my-btn--toggle.my-btn--negcon.my-btn--tone-base.my-btn--inactive {
+  --my-btn-bg-def: var(--color-tog-negcon-base-bg-inactive-def);
+  --my-btn-bg-hov: var(--color-tog-negcon-base-bg-inactive-hov);
+  --my-btn-bg-dis: var(--color-tog-negcon-base-bg-inactive-dis);
+  --my-btn-color-def: var(--color-tog-negcon-base-icon-inactive-def);
+  --my-btn-color-dis: var(--color-tog-negcon-base-icon-inactive-dis);
+  --my-btn-brd-def: var(--color-tog-negcon-base-bor-inactive-def);
+  --my-btn-brd-hov: var(--color-tog-negcon-base-bor-inactive-hov);
+  --my-btn-brd-dis: var(--color-tog-negcon-base-bor-inactive-dis);
+}
+
+.my-btn--toggle.my-btn--active.my-btn--active-tone-alpha-neg {
+  --my-btn-bg-def: var(--color-btn-neutcon-alpha-bg-def);
+  --my-btn-bg-hov: var(--color-btn-neutcon-alpha-bg-hov);
+  --my-btn-bg-pres: var(--color-btn-neutcon-alpha-bg-pres);
+  --my-btn-bg-dis: var(--color-btn-neutcon-alpha-bg-dis);
+  --my-btn-color-def: var(--color-btn-neutcon-alpha-icon-neg-def);
+  --my-btn-color-dis: var(--color-btn-neutcon-alpha-icon-neg-dis);
+  --my-btn-brd-def: var(--color-transparent);
+  --my-btn-brd-hov: var(--color-transparent);
+  --my-btn-brd-pres: var(--color-transparent);
+  --my-btn-brd-dis: var(--color-transparent);
+}
+
+.my-btn--toggle.my-btn--neutcon.my-btn--tone-base.my-btn--icon-tone-neg .wui-icon,
+.my-btn--toggle.my-btn--neutcon.my-btn--tone-dark.my-btn--icon-tone-neg .wui-icon {
+  color: var(--color-tog-soft-icon-neg-def);
+}

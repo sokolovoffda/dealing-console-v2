@@ -1,0 +1,1 @@
+export { default as LocalizationButton } from './ui/localization-button.vue'

@@ -1,0 +1,136 @@
+{
+  "name": "dispatch-console-ui",
+  "license": "MIT",
+  "version": "3.0.0",
+  "type": "module",
+  "author": "Satel Pro",
+  "homepage": "https://github.com/bikeev/console",
+  "main": "electron/electron.js",
+  "scripts": {
+    "generate:theme": "node ./scripts/generate-theme-css.mjs",
+    "postinstall": "node ./scripts/sync-debian-changelog.mjs",
+    "dev": "npm run generate:theme && vite",
+    "build": "npm run generate:theme && vue-tsc --noEmit && vite build",
+    "build:stage": "npm run generate:theme && vue-tsc --noEmit && vite build --mode stage",
+    "build:development": "npm run generate:theme && vue-tsc --noEmit && vite build --mode development",
+    "ts:check": "vue-tsc --noEmit",
+    "clear:build": "rm -rf ./node_modules && npm ci && npm run build",
+    "lint": "set TIMING=all&& eslint --ext .js,.vue,.ts --ignore-path .gitignore src",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:gen_snap": "vitest -u",
+    "coverage": "vitest run --coverage",
+    "electron": "wait-on tcp:5558 && cross-env IS_DEV=true ELECTRON_ENABLE_LOGGING=true electron .",
+    "electron:pack": "electron-builder --dir",
+    "electron:dev": "concurrently --names -k \"cross-env ELECTRON=true BROWSER=none npm run dev\" \"npm run electron\"",
+    "electron:builder": "electron-builder",
+    "build:for:electron": "npm run generate:theme && vue-tsc --noEmit && cross-env VITE_ELECTRON=true ELECTRON=true vite build --mode development",
+    "app:build": "npm run build:for:electron && npm run electron:builder"
+  },
+  "dependencies": {
+    "@rtu-turret-system/turret-lib": "^0.1.2",
+    "@wui/common-library": "2.1.0-alpha.26",
+    "@wui/im": "2.4.0",
+    "@wui/jssip": "3.10.9-alpha.17",
+    "core-js": "^3.38.1",
+    "pinia": "^2.2.1",
+    "register-service-worker": "^1.7.2",
+    "uuid": "^10.0.0",
+    "vite-plugin-pwa": "^0.20.1",
+    "vue": "^3.4.37",
+    "vue-i18n": "^10.0.5",
+    "vue-router": "^4.4.3"
+  },
+  "devDependencies": {
+    "@pinia/testing": "^0.1.5",
+    "@tailwindcss/vite": "^4.1.16",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.2",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.1.0",
+    "@typescript-eslint/parser": "^8.1.0",
+    "@vitejs/plugin-vue": "^5.1.2",
+    "@vue/test-utils": "^2.4.6",
+    "autoprefixer": "^10.4.20",
+    "axios": "^1.7.4",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "dayjs": "^1.11.12",
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8",
+    "eslint": "8.57.0",
+    "eslint-formatter-gitlab": "^5.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-boundaries": "^4.2.2",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-promise": "^7.1.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "fake-indexeddb": "^6.0.0",
+    "jest": "^29.7.0",
+    "jsdom": "^24.1.1",
+    "mitt": "^3.0.1",
+    "postcss": "^8.4.41",
+    "sass": "^1.77.8",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0",
+    "vite-plugin-vue-devtools": "^7.7.7",
+    "vite-plugin-zip-pack": "^1.2.4",
+    "vitest": "^2.0.5",
+    "vue-eslint-parser": "^9.4.3",
+    "vue-tsc": "^2.0.29",
+    "wait-on": "^8.0.1"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.24.0",
+    "@rollup/rollup-linux-x64-musl": "4.24.0",
+    "@rollup/rollup-win32-x64-msvc": "4.24.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "build": {
+    "appId": "dispatch-console-ui",
+    "productName": "dispatch-console-ui",
+    "copyright": "Copyright © 2024 Satel",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "maintainer": "Satel bikeev@satel.org",
+      "desktop": {
+        "StartupNotify": "false",
+        "Encoding": "UTF-8",
+        "MimeType": "x-scheme-handler/deeplink"
+      },
+      "target": [
+        "AppImage",
+        "rpm",
+        "deb",
+        "pacman"
+      ]
+    },
+    "deb": {
+      "priority": "optional"
+    },
+    "asar": true,
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true
+    },
+    "files": [
+      "dist/**/*",
+      "electron/*"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "electron-build"
+    },
+    "extraResources": []
+  }
+}

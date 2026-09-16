@@ -1,0 +1,628 @@
+image: ${DOCKER_PROXY_HOST}/node:24-alpine
+cache:
+  - key:
+      files:
+        - package.json
+    paths:
+      - dist/
+  - key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules/
+stages:
+  - test
+  - build
+  - package
+  - upload
+  - deploy
+
+.check_version: &check_version |
+  apt-get update && apt-get install -y openssh-client git
+  echo "192.168.232.19 apt.satel.local" >> /etc/hosts || true
+  PACKAGE_NAME=$(dpkg-parsechangelog -S Source)
+  PACKAGE_VERSION=$(dpkg-parsechangelog -S Version)
+
+  if [ -n "$CI_COMMIT_TAG" ]; then
+    TAG_VERSION="${CI_COMMIT_TAG#v}"
+    if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
+      echo "ERROR: Package version ($PACKAGE_VERSION) does not match Git tag version ($TAG_VERSION)"
+      exit 1
+    fi
+    echo "Version validation passed: package version matches Git tag"
+  else
+    echo "Build triggered by branch $CI_COMMIT_BRANCH - adding commit hash to version"
+    COMMIT_HASH=$(git rev-parse --short=8 HEAD)
+    COMMIT_HASH=${COMMIT_HASH:0:8}
+    CURRENT_VERSION=$(dpkg-parsechangelog -S Version)
+    if command -v debchange >/dev/null 2>&1; then
+      debchange --local "${COMMIT_HASH}" "CI build from commit $COMMIT_HASH"
+    else
+      NEW_VERSION="${CURRENT_VERSION}+${COMMIT_HASH}"
+      sed -i "1s/(${CURRENT_VERSION}/(${NEW_VERSION}/" debian/changelog
+    fi
+    PACKAGE_VERSION=$(dpkg-parsechangelog -S Version)
+  fi
+
+  if [ -n "$BUILD_AT_APT_RSA_PRIVATE_KEY" ]; then
+    KEY_FILE="$BUILD_AT_APT_RSA_PRIVATE_KEY"
+    chmod 400 "$KEY_FILE"
+    if ssh -i "$KEY_FILE" \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=10 \
+            build@apt.satel.local "echo 'SSH connection successful'" 2>&1; then
+      echo "Checking: $PACKAGE_NAME $PACKAGE_VERSION for $DISTRO"
+      if ssh -i "$KEY_FILE" \
+              -o StrictHostKeyChecking=no \
+              -o ConnectTimeout=10 \
+              build@apt.satel.local \
+              "test -f \"/home/common/debian/${DISTRO}/${PACKAGE_NAME}_${PACKAGE_VERSION}_all.changes\"" 2>/dev/null; then
+        echo "Version exists, skipping build"
+        mkdir -p ./${DEBS_DIR}
+        echo "Version $PACKAGE_VERSION already exists" > ./${DEBS_DIR}/skipped.txt
+        exit 0
+      fi
+    else
+      echo "WARNING: Cannot check if package already exists on remote server"
+    fi
+  fi
+  echo "Proceeding with build"
+
+.retries_upload: &retries_upload |
+  SSH_OPTS="-i $BUILD_AT_APT_RSA_PRIVATE_KEY -o StrictHostKeyChecking=no -o ConnectTimeout=10"
+  REMOTE_LOCK="/home/common/debian/mini-dinstall/mini-dinstall.lock"
+  MAX_ATTEMPTS=15
+  ATTEMPT=0
+
+  wait_for_remote_lock() {
+    local wait=0
+    while [ $wait -lt 30 ]; do
+      if ssh $SSH_OPTS build@apt.satel.local "test -f $REMOTE_LOCK" 2>/dev/null; then
+        echo "Remote mini-dinstall lock present, waiting 10s..."
+        sleep 10
+        wait=$((wait + 1))
+      else
+        return 0
+      fi
+    done
+    echo "WARNING: remote lock still present after wait"
+  }
+
+  while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+    wait_for_remote_lock
+    if dput -c apt.repo.cf -u local *.changes; then
+      echo "SUCCESS: Packages uploaded and processed"
+      exit 0
+    fi
+    echo "dput failed (attempt $((ATTEMPT + 1))/$MAX_ATTEMPTS), retrying in 30s..."
+    sleep 30
+    ATTEMPT=$((ATTEMPT + 1))
+  done
+  echo "ERROR: dput failed after $MAX_ATTEMPTS attempts"
+  exit 1
+
+.dput_post_upload: &dput_post_upload |
+  echo "post_upload_command = ssh -i $BUILD_AT_APT_RSA_PRIVATE_KEY -o StrictHostKeyChecking=no build@apt.satel.local bash -lc 'LOCK=/home/common/debian/mini-dinstall/mini-dinstall.lock; for attempt in \$(seq 1 30); do while [ -f \"\$LOCK\" ]; do echo waiting for mini-dinstall lock; sleep 10; done; mini-dinstall -b -v && exit 0; echo mini-dinstall retry \$attempt; sleep 10; done; exit 1'" >> apt.repo.cf
+
+.deb_install_deps: &deb_install_deps |
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update
+  apt-get install -y --no-install-recommends debhelper
+
+.deb_prepare: &deb_prepare |
+  export DEBIAN_FRONTEND=noninteractive
+  touch .npmrc
+  echo @wui:registry=https://gitlab.satel.org/api/v4/packages/npm/ >> .npmrc
+  echo //gitlab.satel.org/api/v4/packages/npm/:_authToken=${WUI_REGISTRY_ACCESS_TOKEN} >> .npmrc
+  echo //gitlab.satel.org/api/v4/projects/:_authToken=${WUI_REGISTRY_ACCESS_TOKEN} >> .npmrc
+  echo //gitlab.satel.org/api/v4/projects/682/packages/npm/:_authToken=${WUI_REGISTRY_ACCESS_TOKEN} >> .npmrc
+  echo //gitlab.satel.org/api/v4/projects/1126/packages/npm/:_authToken=${WUI_REGISTRY_ACCESS_TOKEN} >> .npmrc
+  chmod +x packaging/ci/*.sh debian/rules
+  chmod +x debian/rtu-turret-console-dealing.postinst debian/rtu-turret-console-dealing.prerm debian/rtu-turret-console-dealing.postrm
+  rm -rf node_modules
+  ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci --ignore-scripts
+  while IFS= read -r -d '' install_js; do
+    node "$install_js" || true
+    sync || true
+  done < <(find node_modules -path '*/esbuild/install.js' -print0 2>/dev/null || true)
+  ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm run "${FRONTEND_BUILD_CMD:-build}"
+
+unit-test:
+  stage: test
+  variables:
+    NODE_ENV: 'test'
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+  before_script:
+    - npm config set @wui:registry=https://gitlab.satel.org/api/v4/packages/npm/
+    - npm config set -- '//gitlab.satel.org/api/v4/packages/npm/:_authToken' "${WUI_REGISTRY_ACCESS_TOKEN}"
+    - npm config set -- '//gitlab.satel.org/api/v4/projects/:_authToken' "${WUI_REGISTRY_ACCESS_TOKEN}"
+    - npm config set -- '//gitlab.satel.org/api/v4/projects/682/packages/npm/:_authToken' "${WUI_REGISTRY_ACCESS_TOKEN}"
+    - npm config set -- '//gitlab.satel.org/api/v4/projects/1126/packages/npm/:_authToken' "${WUI_REGISTRY_ACCESS_TOKEN}"
+  script:
+    - npm ci
+    - npm run test
+  only:
+    - merge_requests
+    - develop
+    - /^release\/.*\..*\..*$/
+    - /^hotfix\/.*\..*\..*$/
+    - web
+  tags:
+    - 'dev-rtu-web-client'
+
+build:
+  stage: build
+  variables:
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"   
+  before_script:
+    - npm config set @wui:registry=https://gitlab.satel.org/api/v4/packages/npm/
+    - npm config set -- '//gitlab.satel.org/api/v4/packages/npm/:_authToken' "${WUI_REGISTRY_ACCESS_TOKEN}"
+    - npm config set -- '//gitlab.satel.org/api/v4/projects/:_authToken' "${WUI_REGISTRY_ACCESS_TOKEN}"
+    - npm config set -- '//gitlab.satel.org/api/v4/projects/682/packages/npm/:_authToken' "${WUI_REGISTRY_ACCESS_TOKEN}"
+    - npm config set -- '//gitlab.satel.org/api/v4/projects/1126/packages/npm/:_authToken' "${WUI_REGISTRY_ACCESS_TOKEN}"
+  script:
+    - npm ci
+    - npm run build:stage
+  only:
+    - merge_requests
+    - develop
+    - /^release\/.*\..*\..*$/
+    - /^hotfix\/.*\..*\..*$/
+    - web
+  tags:
+    - 'dev-rtu-web-client'
+
+# Dev artifact .deb (Debian 10 / buster, no apt publish). Production publish — jobs build-debian* + upload-debian*.
+build-deb:
+  stage: package
+  image: $REGISTRY_ADDRESS/rtu/docker-images/debian10-node24-build:0.0.1
+  tags:
+    - rtu-build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_PIPELINE_SOURCE == "web"
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+    WUI_REGISTRY_ACCESS_TOKEN: $CI_JOB_TOKEN
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+    DOCKER_AUTH_CONFIG: '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD"}}}'
+  script:
+    - *deb_prepare
+    - *deb_install_deps
+    - sed -i "s/) buster; /) buster; /g" debian/changelog
+    - ./packaging/ci/build-deb.sh
+  artifacts:
+    when: on_success
+    paths:
+      - dist/*.deb
+      - dist/*.sha256
+      - dist/*.changes
+      - dist/*.buildinfo
+    expire_in: 30 days
+
+# Optional stage .deb: MODE=stage, login does not require a controller.
+build-deb-stage:
+  stage: package
+  image: $REGISTRY_ADDRESS/rtu/docker-images/debian10-node24-build:0.0.1
+  tags:
+    - rtu-build
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: manual
+    - if: $CI_COMMIT_BRANCH =~ /^release\/.*\..*\..*$/
+      when: manual
+    - if: $CI_COMMIT_BRANCH =~ /^hotfix\/.*\..*\..*$/
+      when: manual
+    - if: $CI_PIPELINE_SOURCE == "web"
+      when: manual
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+    WUI_REGISTRY_ACCESS_TOKEN: $CI_JOB_TOKEN
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+    FRONTEND_BUILD_CMD: "build:stage"
+    DOCKER_AUTH_CONFIG: '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD"}}}'
+  script:
+    - *deb_prepare
+    - *deb_install_deps
+    - sed -i "s/) buster; /) buster; /g" debian/changelog
+    - ./packaging/ci/build-deb.sh
+  artifacts:
+    when: on_success
+    paths:
+      - dist/*.deb
+      - dist/*.sha256
+      - dist/*.changes
+      - dist/*.buildinfo
+    expire_in: 30 days
+
+build-debian10:
+  stage: package
+  image: $REGISTRY_ADDRESS/rtu/docker-images/debian10-node24-build:0.0.1
+  tags:
+    - rtu-build
+  variables:
+    WUI_REGISTRY_ACCESS_TOKEN: $CI_JOB_TOKEN
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+    DOCKER_AUTH_CONFIG: '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD"}}}'
+    DISTRO: buster
+    DEBS_DIR: debs_debian
+  script:
+    - *check_version
+    - *deb_prepare
+    - *deb_install_deps
+    - sed -i "s/) buster; /) buster; /g" debian/changelog
+    - dpkg-buildpackage -us -uc -b
+    - mkdir -p ./debs_debian
+    - mv ../*.deb ./debs_debian/ || true
+    - mv ../*.buildinfo ./debs_debian/ || true
+    - mv ../*.changes ./debs_debian/ || true
+  rules:
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    paths:
+      - ./debs_debian/*
+    when: always
+    expire_in: 24 hour
+
+upload-debian10:
+  stage: upload
+  image: $REGISTRY_ADDRESS/rtu/docker-images/debian10-node24-build:0.0.1
+  variables:
+    DOCKER_AUTH_CONFIG: '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD"}}}'
+  needs:
+    - job: build-debian10
+      artifacts: true
+    - job: upload-debian12
+      artifacts: false
+  tags:
+    - rtu-upload
+  script:
+    - echo "192.168.232.19 apt.satel.local" >> /etc/hosts
+    - |
+      if [ -f ./debs_debian/skipped.txt ]; then
+        echo "Upload skipped"
+        exit 0
+      fi
+      if [ ! -f ./debs_debian/*.changes ]; then
+        echo "No .changes files found"
+        exit 0
+      fi
+    - apt-get install -y dput openssh-client
+    - cd ./debs_debian/
+    - echo "[local]" > apt.repo.cf
+    - echo "distributions = etch,lenny,squeeze,wheezy,jessie,buster" >> apt.repo.cf
+    - echo "incoming = /home/common/debian/mini-dinstall/incoming" >> apt.repo.cf
+    - echo "method = scp" >> apt.repo.cf
+    - echo "login = build" >> apt.repo.cf
+    - echo "ssh_config_options = IdentityFile $BUILD_AT_APT_RSA_PRIVATE_KEY" >> apt.repo.cf
+    - echo "                     StrictHostKeyChecking no" >> apt.repo.cf
+    - echo "run_dinstall = 0" >> apt.repo.cf
+    - *dput_post_upload
+    - echo "fqdn = apt.satel.local" >> apt.repo.cf
+    - chmod 0600 $BUILD_AT_APT_RSA_PRIVATE_KEY
+    - *retries_upload
+  rules:
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    paths:
+      - ./debs_debian/*.upload
+    expire_in: 24 hour
+
+build-debian12:
+  stage: package
+  image: $REGISTRY_ADDRESS/rtu/docker-images/debian12-node24-build:0.0.1
+  tags:
+    - rtu-build
+  variables:
+    WUI_REGISTRY_ACCESS_TOKEN: $CI_JOB_TOKEN
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+    DOCKER_AUTH_CONFIG: '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD"}}}'
+    DISTRO: bookworm
+    DEBS_DIR: debs_debian
+  script:
+    - *check_version
+    - *deb_prepare
+    - *deb_install_deps
+    - sed -i "s/) buster; /) bookworm; /g" debian/changelog
+    - mkdir -p ./debs_debian
+    - dpkg-buildpackage -us -uc -b
+    - mv ../*.deb ./debs_debian/ || true
+    - mv ../*.buildinfo ./debs_debian/ || true
+    - mv ../*.changes ./debs_debian/ || true
+  rules:
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    paths:
+      - ./debs_debian/*
+    when: always
+    expire_in: 24 hour
+
+upload-debian12:
+  stage: upload
+  image: $REGISTRY_ADDRESS/rtu/docker-images/debian12-node24-build:0.0.1
+  needs:
+    - job: build-debian12
+      artifacts: true
+  tags:
+    - rtu-upload
+  script:
+    - |
+      if [ -f ./debs_debian/skipped.txt ]; then
+        echo "Upload skipped"
+        exit 0
+      fi
+      if [ ! -f ./debs_debian/*.changes ]; then
+        echo "No .changes files found"
+        exit 0
+      fi
+    - echo "192.168.232.19 apt.satel.local" >> /etc/hosts || true
+    - apt-get install -y dput openssh-client
+    - cd ./debs_debian/
+    - echo "[local]" > apt.repo.cf
+    - echo "distributions = etch,lenny,squeeze,wheezy,jessie,buster,bullseye,bookworm" >> apt.repo.cf
+    - echo "incoming = /home/common/debian/mini-dinstall/incoming" >> apt.repo.cf
+    - echo "method = scp" >> apt.repo.cf
+    - echo "login = build" >> apt.repo.cf
+    - echo "ssh_config_options = IdentityFile $BUILD_AT_APT_RSA_PRIVATE_KEY" >> apt.repo.cf
+    - echo "                     StrictHostKeyChecking no" >> apt.repo.cf
+    - echo "run_dinstall = 0" >> apt.repo.cf
+    - *dput_post_upload
+    - echo "fqdn = apt.satel.local" >> apt.repo.cf
+    - chmod 0600 $BUILD_AT_APT_RSA_PRIVATE_KEY
+    - *retries_upload
+  rules:
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    paths:
+      - ./debs_debian/*.upload
+    expire_in: 24 hour
+
+build-astra17:
+  stage: package
+  image: $REGISTRY_ADDRESS/rtu/docker-images/astra7-node24-build:0.0.1
+  tags:
+    - rtu-build
+  variables:
+    WUI_REGISTRY_ACCESS_TOKEN: $CI_JOB_TOKEN
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+    DOCKER_AUTH_CONFIG: '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD"}}}'
+    DISTRO: smolensk
+    DEBS_DIR: debs_astra
+  script:
+    - *check_version
+    - *deb_prepare
+    - *deb_install_deps
+    - sed -i "s/) buster; /) smolensk; /g" debian/changelog
+    - mkdir -p ./debs_astra
+    - dpkg-buildpackage -us -uc -b
+    - mv ../*.deb ./debs_astra/ || true
+    - mv ../*.buildinfo ./debs_astra/ || true
+    - mv ../*.changes ./debs_astra/ || true
+  rules:
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    paths:
+      - ./debs_astra/*
+    when: always
+    expire_in: 24 hour
+
+upload-astra17:
+  stage: upload
+  image: $REGISTRY_ADDRESS/rtu/docker-images/debian10-node24-build:0.0.1
+  variables:
+    DOCKER_AUTH_CONFIG: '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD"}}}'
+  needs:
+    - job: build-astra17
+      artifacts: true
+    - job: upload-debian10
+      artifacts: false
+  tags:
+    - rtu-upload
+  script:
+    - echo "192.168.232.19 apt.satel.local" >> /etc/hosts
+    - |
+      if [ -f ./debs_astra/skipped.txt ]; then
+        echo "Upload skipped"
+        exit 0
+      fi
+      if [ ! -f ./debs_astra/*.changes ]; then
+        echo "No .changes files found"
+        exit 0
+      fi
+    - apt-get install -y dput openssh-client
+    - cd ./debs_astra/
+    - echo "[local]" > apt.repo.cf
+    - echo "distributions = etch,lenny,squeeze,wheezy,jessie,buster,smolensk" >> apt.repo.cf
+    - echo "incoming = /home/common/debian/mini-dinstall/incoming" >> apt.repo.cf
+    - echo "method = scp" >> apt.repo.cf
+    - echo "login = build" >> apt.repo.cf
+    - echo "ssh_config_options = IdentityFile $BUILD_AT_APT_RSA_PRIVATE_KEY" >> apt.repo.cf
+    - echo "                     StrictHostKeyChecking no" >> apt.repo.cf
+    - echo "run_dinstall = 0" >> apt.repo.cf
+    - *dput_post_upload
+    - echo "fqdn = apt.satel.local" >> apt.repo.cf
+    - chmod 0600 $BUILD_AT_APT_RSA_PRIVATE_KEY
+    - *retries_upload
+  rules:
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    paths:
+      - ./debs_astra/*.upload
+    expire_in: 24 hour
+
+build-astra18:
+  stage: package
+  image: $REGISTRY_ADDRESS/rtu/docker-images/astra8-node24-build:0.0.1
+  tags:
+    - rtu-build
+  variables:
+    WUI_REGISTRY_ACCESS_TOKEN: $CI_JOB_TOKEN
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+    DOCKER_AUTH_CONFIG: '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD"}}}'
+    DISTRO: smolensk18
+    DEBS_DIR: debs_astra
+  script:
+    - *check_version
+    - *deb_prepare
+    - *deb_install_deps
+    - sed -i "s/) buster; /) smolensk18; /g" debian/changelog
+    - mkdir -p ./debs_astra
+    - dpkg-buildpackage -us -uc -b
+    - mv ../*.deb ./debs_astra/ || true
+    - mv ../*.buildinfo ./debs_astra/ || true
+    - mv ../*.changes ./debs_astra/ || true
+  rules:
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    paths:
+      - ./debs_astra/*
+    when: always
+    expire_in: 24 hour
+
+upload-astra18:
+  stage: upload
+  image: $REGISTRY_ADDRESS/rtu/docker-images/debian12-node24-build:0.0.1
+  needs:
+    - job: build-astra18
+      artifacts: true
+    - job: upload-astra17
+      artifacts: false
+  tags:
+    - rtu-upload
+  script:
+    - |
+      if [ -f ./debs_astra/skipped.txt ]; then
+        echo "Upload skipped"
+        exit 0
+      fi
+      if [ ! -f ./debs_astra/*.changes ]; then
+        echo "No .changes files found"
+        exit 0
+      fi
+    - echo "192.168.232.19 apt.satel.local" >> /etc/hosts || true
+    - apt-get install -y dput openssh-client
+    - cd ./debs_astra/
+    - echo "[local]" > apt.repo.cf
+    - echo "distributions = etch,lenny,squeeze,wheezy,jessie,buster,smolensk18" >> apt.repo.cf
+    - echo "incoming = /home/common/debian/mini-dinstall/incoming" >> apt.repo.cf
+    - echo "method = scp" >> apt.repo.cf
+    - echo "login = build" >> apt.repo.cf
+    - echo "ssh_config_options = IdentityFile $BUILD_AT_APT_RSA_PRIVATE_KEY" >> apt.repo.cf
+    - echo "                     StrictHostKeyChecking no" >> apt.repo.cf
+    - echo "run_dinstall = 0" >> apt.repo.cf
+    - *dput_post_upload
+    - echo "fqdn = apt.satel.local" >> apt.repo.cf
+    - chmod 0600 $BUILD_AT_APT_RSA_PRIVATE_KEY
+    - *retries_upload
+  rules:
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    paths:
+      - ./debs_astra/*.upload
+    expire_in: 24 hour
+
+publish:
+  stage: deploy
+  variables:
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"   
+  image: ${DOCKER_PROXY_HOST}/docker:latest
+  services:
+    - name: ${DOCKER_PROXY_HOST}/docker:dind
+      command: ["--tls=false"]
+  script:
+    - export VERSION=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
+    - export CONTAINER_RELEASE_IMAGE=$CI_REGISTRY_IMAGE:$VERSION
+    - docker build
+      --build-arg WUI_REGISTRY_ACCESS_TOKEN=${WUI_REGISTRY_ACCESS_TOKEN}
+      --build-arg DOCKER_PROXY_HOST=${DOCKER_PROXY_HOST}
+      -t $CONTAINER_RELEASE_IMAGE .
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+    - docker push $CONTAINER_RELEASE_IMAGE
+  only:
+    - tag
+    - master    
+  tags:
+    - 'dev-rtu-web-client'
+
+.abstract-docker-deploys:
+  stage: deploy
+  image: ${DOCKER_PROXY_HOST}/docker:latest
+  variables:  
+    DOCKER_APP_NAME: "dealing-console"
+    DOCKER_APP_PORT: "3333"
+  services:
+    - name: ${DOCKER_PROXY_HOST}/docker:dind
+      command: ["--tls=false"]
+  script:
+    - docker build 
+      --build-arg WUI_REGISTRY_ACCESS_TOKEN=${WUI_REGISTRY_ACCESS_TOKEN}
+      --build-arg DOCKER_APP_PORT=${DOCKER_APP_PORT}      
+      --build-arg DOCKER_PROXY_HOST=${DOCKER_PROXY_HOST}
+      -t vue:nginx .
+    - docker stop $DOCKER_APP_NAME || true
+    - docker rm $DOCKER_APP_NAME || true
+    - docker run --name $DOCKER_APP_NAME --restart=unless-stopped -d -v ssl:/usr/share/nginx/ssl --network="host" vue:nginx
+  cache:
+    policy: pull
+
+.abstract-deploy-from-docker-build:
+  stage: deploy
+  image: ${DOCKER_PROXY_HOST}/docker:latest
+  services:
+    - name: ${DOCKER_PROXY_HOST}/docker:dind
+      command: ["--tls=false"]
+  script:
+    - docker build --no-cache
+      --build-arg WUI_REGISTRY_ACCESS_TOKEN=${WUI_REGISTRY_ACCESS_TOKEN}
+      --build-arg DOCKER_APP_PORT=${DOCKER_APP_PORT}
+      --build-arg DOCKER_PROXY_HOST=${DOCKER_PROXY_HOST}
+      -t vue:nginx .
+    - docker stop $DOCKER_APP_NAME || true
+    - docker rm $DOCKER_APP_NAME || true
+    - docker run --cpu-quota="200000" --name $DOCKER_APP_NAME --restart=unless-stopped -d -v ssl:/usr/share/nginx/ssl -v files:/usr/share/nginx/files --network="host" vue:nginx
+  cache:
+    policy: pull
+
+deploy-backend-stage:
+  variables:
+    DOCKER_APP_NAME: "dealing-console-ui"
+    DOCKER_APP_PORT: "3333"
+  extends: .abstract-deploy-from-docker-build
+  tags:
+    - 'deploy-stage-rtu-web-client'
+  environment:
+    name: Staging
+  only:
+    - /^release\/v.*$/
+    - /^hotfix\/v.*$/
+    - tag
+    - master
+    - web
+
+deploy-dev:
+  extends: .abstract-docker-deploys
+  variables:
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"   
+  tags:
+    - '192.168.232.234'
+  only:
+    - tag
+    - develop
+    - master
+    - web
+
+deploy-stage:
+  extends: .abstract-docker-deploys
+  variables:
+    ELECTRON_SKIP_BINARY_DOWNLOAD: "1"   
+  tags:
+    - '192.168.232.235'
+  only:
+    - /^release\/.*\..*\..*$/
+    - /^hotfix\/.*\..*\..*$/
+    - tag
+    - master
+    - web

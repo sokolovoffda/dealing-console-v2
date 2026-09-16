@@ -1,0 +1,1210 @@
+{
+  "source": "C:\\Users\\d.sokolov\\Downloads\\openapi.json",
+  "extractedAt": "2026-07-24",
+  "paths": {
+    "/api/v1/me/pinned-calls": {
+      "get": {
+        "tags": [
+          "me"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pinned calls panel (structured REST; not SettingsEnvelope)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallsPanelDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/me/pinned-calls/slots/{order}": {
+      "put": {
+        "tags": [
+          "me"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "order",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallSlotPutBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated pinned call slot",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallSlotDto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Pinned call slot cleared"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/me/pinned-calls/slots/reorder": {
+      "put": {
+        "tags": [
+          "me"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallSlotsReorderBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reordered pinned calls panel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallsPanelDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/me/pinned-calls/groups/layout": {
+      "put": {
+        "tags": [
+          "me"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallsGroupsLayoutBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated pinned calls groups layout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallsPanelDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Groups layout change blocked (members in affected groups)"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/me/pinned-calls/groups/{index}": {
+      "put": {
+        "tags": [
+          "me"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "index",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallGroupUpdateBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated pinned calls broadcast group",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallGroupDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Broadcast group member does not match any pinned slot"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/me/pinned-calls/groups/{index}/members": {
+      "post": {
+        "tags": [
+          "me"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "index",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallGroupMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added pinned calls broadcast group member",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallGroupDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Broadcast group member already exists"
+          },
+          "422": {
+            "description": "Broadcast group member does not match any pinned slot"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "me"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "index",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallGroupMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Removed pinned calls broadcast group member"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/me/pinned-calls/import": {
+      "put": {
+        "tags": [
+          "me"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallsImportBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Imported pinned calls panel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallsPanelDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Broadcast group member does not match any pinned slot"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userId}/pinned-calls": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pinned calls panel (structured REST; not SettingsEnvelope)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallsPanelDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userId}/pinned-calls/slots/{order}": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "order",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallSlotPutBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated pinned call slot",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallSlotDto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Pinned call slot cleared"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userId}/pinned-calls/slots/reorder": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallSlotsReorderBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reordered pinned calls panel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallsPanelDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userId}/pinned-calls/groups/layout": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallsGroupsLayoutBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated pinned calls groups layout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallsPanelDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Groups layout change blocked (members in affected groups)"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userId}/pinned-calls/groups/{index}": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "index",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallGroupUpdateBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated pinned calls broadcast group",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallGroupDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Broadcast group member does not match any pinned slot"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userId}/pinned-calls/groups/{index}/members": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "index",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallGroupMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added pinned calls broadcast group member",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallGroupDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Broadcast group member already exists"
+          },
+          "422": {
+            "description": "Broadcast group member does not match any pinned slot"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "index",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallGroupMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Removed pinned calls broadcast group member"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userId}/pinned-calls/import": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinnedCallsImportBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Imported pinned calls panel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PinnedCallsPanelDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Broadcast group member does not match any pinned slot"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "schemas": {
+    "PinnedCallGroupDto": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 7
+        },
+        "micState": {
+          "type": "boolean"
+        },
+        "volumeState": {
+          "type": "boolean"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/PinnedCallGroupMemberDto"
+          },
+          "maxItems": 7
+        }
+      },
+      "required": [
+        "index",
+        "micState",
+        "volumeState",
+        "members"
+      ]
+    },
+    "PinnedCallGroupMemberDto": {
+      "type": "object",
+      "properties": {
+        "pServed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slotIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "exclusiveMinimum": true,
+          "default": 1
+        }
+      },
+      "required": [
+        "pServed"
+      ]
+    },
+    "PinnedCallGroupUpdateBody": {
+      "type": "object",
+      "properties": {
+        "micState": {
+          "type": "boolean"
+        },
+        "volumeState": {
+          "type": "boolean"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/PinnedCallGroupMemberDto"
+          },
+          "maxItems": 7
+        }
+      },
+      "required": [
+        "micState",
+        "volumeState",
+        "members"
+      ]
+    },
+    "PinnedCallSlotClearBody": {
+      "type": "object",
+      "properties": {
+        "clear": {
+          "type": "boolean",
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "clear"
+      ]
+    },
+    "PinnedCallSlotDto": {
+      "type": "object",
+      "properties": {
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 21
+        },
+        "pServed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slotIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "exclusiveMinimum": true,
+          "default": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "prevVolume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "micState": {
+          "type": "boolean"
+        },
+        "prevMicState": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "order",
+        "pServed",
+        "title",
+        "volume",
+        "prevVolume",
+        "micState",
+        "prevMicState"
+      ]
+    },
+    "PinnedCallSlotPutBody": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/PinnedCallSlotClearBody"
+        },
+        {
+          "$ref": "#/components/schemas/PinnedCallSlotUpsertBody"
+        }
+      ]
+    },
+    "PinnedCallSlotUpsertBody": {
+      "type": "object",
+      "properties": {
+        "pServed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slotIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "exclusiveMinimum": true,
+          "default": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "prevVolume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "micState": {
+          "type": "boolean"
+        },
+        "prevMicState": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "pServed",
+        "title",
+        "volume",
+        "prevVolume",
+        "micState",
+        "prevMicState"
+      ]
+    },
+    "PinnedCallSlotsReorderBody": {
+      "type": "object",
+      "properties": {
+        "fromOrder": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 21
+        },
+        "toOrder": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 21
+        }
+      },
+      "required": [
+        "fromOrder",
+        "toOrder"
+      ]
+    },
+    "PinnedCallsGroupsLayout": {
+      "anyOf": [
+        {
+          "type": "number",
+          "enum": [
+            4
+          ]
+        },
+        {
+          "type": "number",
+          "enum": [
+            8
+          ]
+        },
+        {
+          "nullable": true
+        }
+      ]
+    },
+    "PinnedCallsGroupsLayoutBody": {
+      "type": "object",
+      "properties": {
+        "groupsLayout": {
+          "$ref": "#/components/schemas/PinnedCallsGroupsLayout"
+        }
+      },
+      "required": [
+        "groupsLayout"
+      ]
+    },
+    "PinnedCallsImportBody": {
+      "type": "object",
+      "properties": {
+        "pinnedCalls": {
+          "type": "object",
+          "additionalProperties": {
+            "nullable": true
+          }
+        },
+        "pinnedCallsGroups": {
+          "type": "object",
+          "additionalProperties": {
+            "nullable": true
+          }
+        }
+      }
+    },
+    "PinnedCallsPanelDto": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "enum": [
+            1
+          ]
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/PinnedCallSlotDto"
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/PinnedCallGroupDto"
+          }
+        },
+        "groupsLayout": {
+          "$ref": "#/components/schemas/PinnedCallsGroupsLayout"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "slots",
+        "groups",
+        "groupsLayout"
+      ]
+    }
+  }
+}

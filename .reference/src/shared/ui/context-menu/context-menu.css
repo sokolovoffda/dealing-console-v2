@@ -1,0 +1,44 @@
+.context-menu-item {
+  display: flex;
+  width: 100%;
+  min-width: 220px;
+  align-items: center;
+  gap: 4px;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  padding: 8px 12px 8px 8px;
+  text-align: left;
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+
+.context-menu-item:hover:not(:disabled) {
+  background-color: var(--color-black-600);
+}
+
+.context-menu-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.context-menu-item__icon .wui-icon {
+  color: inherit;
+}
+
+.context-menu-item__label {
+  color: var(--color-comp-menu-item-txt-label-def);
+}
+
+.context-menu-item--border-top {
+  border-top: 1px solid var(--color-black-600);
+}
+
+.context-menu-item--border-bottom {
+  border-bottom: 1px solid var(--color-black-600);
+}
+
+.context-menu-item--border-both {
+  border-top: 1px solid var(--color-black-600);
+  border-bottom: 1px solid var(--color-black-600);
+}

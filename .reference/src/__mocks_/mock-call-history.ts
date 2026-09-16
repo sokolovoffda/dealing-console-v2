@@ -1,0 +1,65 @@
+import { CallHistoryItem } from '@/entities/call-history'
+
+const TIMESTAMP = 1721908428319
+
+export const mockCallHistory: CallHistoryItem = {
+  'item': {
+    'type': 'MessageCallReceived',
+    'eventId': 143826068,
+    'rank': 144,
+    'timestamp': 1721849173,
+    'pServed': '<sip:ROOMS-4BD87736B65862772AFA6DE721EE5AF7@ROOT>',
+    'to': '',
+    'from': '<sip:ROOMS-4BD87736B65862772AFA6DE721EE5AF7@ROOT>',
+    'event': 'appointment_end',
+    'confId': '632C44B7FA7B38DEC3824172F061D940',
+    'conferenceStatistic': {
+      'calls': {
+        'F9D0158D26137745EFA6BA07B9ECD93D': {
+          'isCallAnswered': true,
+          'isCallEnded': true,
+          'isCallMissed': false,
+          'timestampCallAnswered': 1721849116,
+          'timestampCallEnded': 1721849173,
+          'participantPServed': '<sip:44942@ROOT>',
+          'participantName': 'Гуськов Евгений',
+          isCallRejected: false,
+          timestampCallMissed: TIMESTAMP,
+          timestampCallRejected: TIMESTAMP,
+        },
+        '2717B7377D43F41447EFAB314D02D937': {
+          'isCallAnswered': true,
+          'isCallMissed': false,
+          'timestampCallEnded': TIMESTAMP,
+          timestampCallRejected: TIMESTAMP,
+          timestampCallMissed: TIMESTAMP,
+          isCallRejected: false,
+          isCallEnded: false,
+          timestampCallAnswered: TIMESTAMP,
+          participantName: 'participantName',
+          participantPServed: 'participantPServed',
+        },
+        '9073E66251ABB5AD1BCB329C8377D93A': {
+          'isCallAnswered': true,
+          'isCallMissed': false,
+          'timestampCallEnded': 1721849170,
+          'participantPServed': '<sip:44943@ROOT>',
+          'participantName': 'Гуськов Евгений 2',
+          timestampCallAnswered: TIMESTAMP,
+          timestampCallRejected: TIMESTAMP,
+          isCallEnded: true,
+          isCallRejected: false,
+          timestampCallMissed: TIMESTAMP,
+        },
+      },
+      'timestampStart': 1721849116,
+      'timestampStop': 1721849173,
+    },
+    'roomName': 'test10',
+  },
+  'eventId': 143826068,
+  'rank': 144,
+  'timestamp': 1721849173,
+  'status': 0,
+  'type': 59,
+}

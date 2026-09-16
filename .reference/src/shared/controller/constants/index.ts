@@ -1,0 +1,10 @@
+export const PULT = 'pult'
+export const HUB = 'hub'
+export const HANDSET = 'handset'
+export const GOOSE = 'goose'
+export const HANDSET_R2 = `${HANDSET}_R2`
+export const HANDSET_L2 = `${HANDSET}_L2`
+export const GOOSE_R1 = 'goose_R1'
+export const GOOSE_L1 = 'goose_L1'
+export const GOOSENECK_MIC = 'gooseneck' // лейбл микрофона у гусиной шеи
+export const HUB_SPEAKER = 'internal speakers' // лейбл динамика у гусиной шеи
