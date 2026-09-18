@@ -18,11 +18,13 @@
 import { useAppShellStore } from '@/shared'
 import { storeToRefs } from 'pinia'
 import { WuiBtn } from '@wui/common-library'
+import { getStandConfigSnapshot } from '@/shared/stand-config'
 
 const appShellStore = useAppShellStore()
 
 const { visitCount } = storeToRefs(appShellStore)
 const { increment } = appShellStore
-</script>
 
-<style scoped></style>
+const stand = getStandConfigSnapshot()
+console.log(stand)
+</script>

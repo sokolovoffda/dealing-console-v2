@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
+  envDir: './env',
   plugins: [vue(), vueDevTools(), tailwindcss()],
   resolve: {
     alias: {

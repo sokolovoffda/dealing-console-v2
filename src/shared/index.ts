@@ -1,1 +1,2 @@
-export { useAppShellStore } from './test-share/model/use-app-shell-store'
+export { useAppShellStore } from './test-share'
+export { getApsBaseUrl, getRtuBaseUrl, getStandConfigSnapshot } from './stand-config'
