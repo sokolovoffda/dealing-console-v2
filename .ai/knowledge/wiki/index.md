@@ -5,3 +5,4 @@
 ## Frontend
 
 - `frontend/fsd-structure.md` — слои FSD, public API, алиас `@/`
+- `frontend/wui-theme.md` — подключение `@wui/common-library`, bootstrapStyles, отличия от референса

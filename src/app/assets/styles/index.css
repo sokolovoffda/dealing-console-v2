@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+@import '@wui/common-library/foundation.css';
+@import '@wui/common-library/palette.css';
+
+#app {
+  font-family: var(--font-inter);
+  height: 100%;
+  overflow: hidden;
+}
+html,
+body {
+  color: var(--color-white);
+  font-size: 18px;
+  font-family: var(--font-inter);
+  background-color: var(--color-bg-base-bg1);
+  height: 100%;
+  overflow: hidden;
+}
