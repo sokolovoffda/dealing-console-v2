@@ -32,18 +32,18 @@
 
 ## Фазы (LEARN-000)
 
-| Фаза | Содержание | Дочерние LEARN (ориентир) |
-|------|------------|---------------------------|
-| F0 | Scaffold + FSD + WUI (без i18n) | 001–004 |
-| F1 | Config, auth, API стенда | 005–007 |
-| F2 | SIP/WebRTC + call-session + core controls | 008–010 |
-| F3 | Layout shell + shared context-menu | 011–012 |
-| F4 | Call card / call manager | 013–015 |
-| F5 | Завешенные + media devices | 016–019 |
-| F6 | Contacts / directory | 020–021 |
-| F7 | ПБВ: волна 1 (группы/сетка/звонок/меню), затем волна 2 (layout/переносы) | 022–027 |
-| F8 | Settings (устройства) | 028 |
-| F9–F10 | Electron; тесты | позже |
+| Фаза   | Содержание                                                               | Дочерние LEARN (ориентир) |
+| ------ | ------------------------------------------------------------------------ | ------------------------- |
+| F0     | Scaffold + FSD + WUI (без i18n)                                          | 001–004                   |
+| F1     | Config, auth, API стенда                                                 | 005–007                   |
+| F2     | SIP/WebRTC + call-session + core controls                                | 008–010                   |
+| F3     | Layout shell + shared context-menu                                       | 011–012                   |
+| F4     | Call card / call manager                                                 | 013–015                   |
+| F5     | Завешенные + media devices                                               | 016–019                   |
+| F6     | Contacts / directory                                                     | 020–021                   |
+| F7     | ПБВ: волна 1 (группы/сетка/звонок/меню), затем волна 2 (layout/переносы) | 022–027                   |
+| F8     | Settings (устройства)                                                    | 028                       |
+| F9–F10 | Electron; тесты                                                          | позже                     |
 
 Детали и зависимости: `.ai/tasks/LEARN-000-app-roadmap/implementation_plan_1.md`.
 
