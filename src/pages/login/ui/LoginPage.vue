@@ -1,7 +1,13 @@
 <template>
   <div class="h-full w-full flex items-center justify-center">
-    <form class="" action="">
-      <div class="py-10 px-8 bg-bg-base-bg1">test</div>
+    <div class="flex overflow-hidden rounded-16 border border-wrkspc-menu-brd-def">
+      <div class="py-10 px-8 bg-bg-base-bg1">
+        <div class="flex flex-col items-center gap-3">
+          <wui-icon name="logoSatel" class="mb-2 text-brand-base-def h-30! w-30!" />
+          <div class="text-xl font-bold">Дилинговый-пульт</div>
+          <div class="text-[14px]">Версия 0.0.1</div>
+        </div>
+      </div>
       <div class="py-10 px-8 bg-bg-base-bg2">
         <div class="text-xl mb-10">Добро пожаловать!</div>
         <div class="flex flex-col gap-4 mb-10">
@@ -11,12 +17,12 @@
 
         <wui-btn :size="48" variant="brand" state="filled">Войти</wui-btn>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { WuiBtn, WuiInput } from '@wui/common-library'
+import { WuiBtn, WuiInput, WuiIcon } from '@wui/common-library'
 import { ref } from 'vue'
 
 const login = ref('')

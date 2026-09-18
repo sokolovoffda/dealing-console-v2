@@ -18,7 +18,7 @@
      - `tokens.css` (временные card-deal и др.)
      - `table.css`
    - базовые `html` / `body` / `#app`.
-4. Старт: `bootstrapStyles({ theme: 'lsDark-1' })` в `main.ts`, затем Pinia + Router + `mount`.
+4. Старт: `bootstrapStyles({ theme: 'lsDark-1', useFonts: ['Inter'] })` в `main.ts` (шрифт как в rtu-user-web-app), затем Pinia + Router + `mount`. `html`/`body` используют `font-family: var(--font-inter)`.
 5. IDE: расширение Tailwind CSS IntelliSense, `tailwindCSS.experimental.configFile` → этот `index.css`, `editor.quickSuggestions.strings: true`.
 
 ## Правила для UI
