@@ -1,1 +1,1 @@
-export { useAppShellStore } from './models/use-app-shell-store'
+export { useAppShellStore } from './model/use-app-shell-store'
