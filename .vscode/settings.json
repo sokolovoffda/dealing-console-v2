@@ -21,5 +21,22 @@
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "**/src/**/ui/**",
+    "**/src/**/model/**",
+    "**/src/**/lib/**",
+    "**/src/**/api/**"
+  ],
+  "javascript.preferences.autoImportFileExcludePatterns": [
+    "**/src/**/ui/**",
+    "**/src/**/model/**",
+    "**/src/**/lib/**",
+    "**/src/**/api/**"
+  ],
+  "typescript.preferences.autoImportSpecifierExcludeRegexes": ["/ui/", "\\.vue$"],
+  "javascript.preferences.autoImportSpecifierExcludeRegexes": ["/ui/", "\\.vue$"]
 }
