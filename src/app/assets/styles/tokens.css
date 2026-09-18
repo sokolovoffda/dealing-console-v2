@@ -1,0 +1,77 @@
+/* Временные токены цветов пульта. После переноса в wui-common-library файл можно отключить. */
+
+@theme {
+  /* карточка вызова — base */
+  --color-card-deal-bg-dis-base: hsla(216, 8%, 20%, 0.32);
+  --color-card-deal-bg-def-base: hsla(218, 8%, 20%, 1);
+  --color-card-deal-border-def-base: hsla(218, 8%, 28%, 1);
+  --color-card-deal-border-def-red: hsla(0, 28%, 28%, 1);
+  --color-card-deal-number-def: hsla(0, 0%, 100%, 1);
+  --color-card-deal-name-def: hsla(0, 0%, 100%, 0.6);
+  --color-card-deal-name-state: hsla(216, 8%, 8%, 0.8);
+  --color-card-deal-number-dis: hsla(0, 0%, 100%, 0.32);
+  --color-card-deal-name-dis: hsla(0, 0%, 100%, 0.16);
+
+  /* карточка вызова — state */
+  --color-card-deal-bg-state-inc-imp: hsla(0, 80%, 64%, 1);
+  --color-card-deal-bg-state-inc-call: hsla(32, 80%, 64%, 1);
+  --color-card-deal-bg-state-inc-conf: hsla(200, 80%, 64%, 1);
+  --color-card-deal-bg-state-outg-call: hsla(64, 80%, 64%, 1);
+  --color-card-deal-bg-state-outg-conf: hsla(200, 80%, 64%, 1);
+  --color-card-deal-bg-state-call: hsla(120, 56%, 48%, 1);
+  --color-card-deal-bg-state-conf: hsla(200, 80%, 64%, 1);
+  --color-card-deal-bg-state-inc-hold: hsla(64, 80%, 64%, 1);
+  --color-card-deal-bg-state-outg-hold: hsla(64, 80%, 64%, 1);
+  --color-card-deal-bg-state-conf-inc-hold: hsla(200, 80%, 64%, 1);
+  --color-card-deal-bg-state-conf-outg-hold: hsla(200, 80%, 64%, 1);
+
+  /* карточка вызова — tone */
+  --color-card-deal-bg-def-red: hsla(0, 28%, 20%, 1);
+  --color-card-deal-bg-def-orange: hsla(24, 28%, 20%, 1);
+  --color-card-deal-bg-def-yellow1: hsla(48, 28%, 20%, 1);
+  --color-card-deal-bg-def-green1: hsla(96, 28%, 20%, 1);
+  --color-card-deal-bg-def-green2: hsla(120, 28%, 20%, 1);
+  --color-card-deal-bg-def-cyan1: hsla(168, 28%, 20%, 1);
+  --color-card-deal-bg-def-blue1: hsla(216, 28%, 22%, 1);
+  --color-card-deal-bg-def-blue2: hsla(240, 28%, 24%, 1);
+  --color-card-deal-bg-def-violet: hsla(264, 28%, 22%, 1);
+  --color-card-deal-bg-def-magenta1: hsla(288, 28%, 20%, 1);
+  --color-card-deal-bg-def-magenta2: hsla(312, 28%, 20%, 1);
+  --color-card-deal-bg-def-pink: hsla(336, 28%, 20%, 1);
+  --color-card-deal-bg-dis-red: hsla(0, 28%, 20%, 0.32);
+
+  /* карточка вызова — avatar */
+  --color-card-deal-avatar-call-def: hsla(64, 80%, 64%, 1);
+  --color-card-deal-avatar-def-base: hsla(216, 8%, 48%, 1);
+  --color-card-deal-avatar-dis-base: hsla(216, 8%, 48%, 0.32);
+  --color-card-deal-avatar-state-state: hsla(216, 8%, 8%, 0.8);
+
+  /* карточка вызова — border, add */
+  --color-card-deal-border-state-add: hsla(216, 8%, 32%, 0.32);
+  --color-card-deal-add-def: hsla(216, 8%, 32%, 1);
+
+  /* кнопки */
+  --color-btn-neut-alpha-icon-def: hsla(216, 8%, 80%, 1);
+  --color-btn-warn-base-bg-def: hsla(32, 56%, 48%, 1);
+  --color-btn-neut-soft-bg-hov: hsla(216, 8%, 16%, 1);
+
+  /* context menu */
+  --color-comp-menu-item-icon-base-def: hsla(216, 8%, 64%, 1);
+  --color-comp-menu-item-icon-base-neg: hsla(0, 80%, 64%, 1);
+  --color-comp-menu-item-txt-label-def: hsla(0, 0%, 100%, 1);
+
+  --color-login-logo-logotype-def: hsla(216, 8%, 32%, 1);
+
+  /* Figma: цвет иконки title виджета Activity Monitor — временно, до переноса в theme/DS */
+  --color-title-activity-monitor-icon-def: var(--color-cyan-192-80-36);
+
+  /* Figma comp/title/setting/icon/def — временно, до переноса в common-library */
+  --color-title-setting-icon-def: hsla(312, 56%, 48%, 1);
+
+  /*
+   * Figma AM queue card (не активный вызов): bg blue-216-8-12, brd blue-216-8-28.
+   * Временно, пока дизайнер не добавит токены в либу.
+   */
+  --color-card-am-queue-bg-def: var(--color-blue-216-8-12);
+  --color-card-am-queue-brd-def: var(--color-blue-216-8-28);
+}

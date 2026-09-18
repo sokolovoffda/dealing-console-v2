@@ -38,5 +38,21 @@
     "**/src/**/api/**"
   ],
   "typescript.preferences.autoImportSpecifierExcludeRegexes": ["/ui/", "\\.vue$"],
-  "javascript.preferences.autoImportSpecifierExcludeRegexes": ["/ui/", "\\.vue$"]
+  "javascript.preferences.autoImportSpecifierExcludeRegexes": ["/ui/", "\\.vue$"],
+
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.wordBasedSuggestions": "off",
+
+  "tailwindCSS.experimental.configFile": "src/app/assets/styles/index.css",
+  "tailwindCSS.classAttributes": ["class", "className", ":class", "class:list"],
+  "tailwindCSS.includeLanguages": {
+    "vue": "html",
+    "javascript": "javascript",
+    "typescript": "typescript"
+  }
 }

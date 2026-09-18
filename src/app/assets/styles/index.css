@@ -1,12 +1,19 @@
 @import 'tailwindcss';
 @import '@wui/common-library/foundation.css';
 @import '@wui/common-library/palette.css';
+/* Источник: .reference/src/app/assets/styles/ — пультовые токены / темы */
+@import './theme.css';
+@import './light-1.css';
+@import './lsDark-1.css';
+@import './tokens.css';
+@import './table.css';
 
 #app {
   font-family: var(--font-inter);
   height: 100%;
   overflow: hidden;
 }
+
 html,
 body {
   color: var(--color-white);

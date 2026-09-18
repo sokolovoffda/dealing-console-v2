@@ -1,5 +1,17 @@
 # Wiki log
 
+## [2026-09-18] task-update pulpit theme tokens
+
+- **Type:** task-update
+- **Summary:** Подключены локальные пультовые CSS (`theme`, `lsDark-1`, `light-1`, `tokens`, `table`) из референса; настроен Tailwind IntelliSense (configFile + quickSuggestions в strings).
+- **Updated pages:**
+  - `frontend/wui-theme.md`
+- **Sources:**
+  - `.reference/src/app/assets/styles/`
+  - уточнение пользователя от 2026-09-18
+- **Open questions:**
+  - нужен ли позже `generate:theme` script как в проде
+
 ## [2026-09-18] task-update WUI theme after LEARN-004
 
 - **Type:** task-update
