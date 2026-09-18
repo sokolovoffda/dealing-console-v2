@@ -1,10 +1,17 @@
 import { AboutPage } from '@/pages/about'
 import { HomePage } from '@/pages/home'
+import { LoginPage } from '@/pages/login'
 import { NotFoundPage } from '@/pages/not-found'
 
 import { createRouter, createWebHistory } from 'vue-router'
 
 export const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginPage,
+    meta: { title: 'Авторизация', nav: false },
+  },
   {
     path: '/',
     name: 'home',
